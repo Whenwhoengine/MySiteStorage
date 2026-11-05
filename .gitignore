@@ -1,0 +1,16 @@
+# 相依套件與建置產物
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+*.log
+
+# MyDyad 的工作資料夾（MyDyad 會自動追加 .dyad/；.mydyad 是它讀專案時排除的自家資料夾）
+.dyad/
+.mydyad/
+
+# 環境變數檔（本專案不需要任何秘密，仍一律不進 Git）
+.env
+.env.*
