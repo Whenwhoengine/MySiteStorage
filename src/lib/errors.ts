@@ -4,6 +4,7 @@ import type { HeadProps } from './page-props';
 
 /** 錯誤頁標題（比照 Blade errors/mysite.blade.php）。 */
 export const ERROR_HEADINGS: Record<ErrorInfo['status'], string> = {
+  400: '無法完成請求',
   404: '找不到這個頁面',
   500: '系統發生錯誤',
   503: '內容暫時無法讀取',
@@ -15,6 +16,7 @@ export const ERROR_MESSAGES = {
   pageNotFound: '找不到這個頁面。',
   unavailable: '內容暫時無法讀取，請稍後再試。',
   internal: '系統發生錯誤，請稍後再試。',
+  badRequest: '無法完成請求。',
 } as const;
 
 /** 組 <title>：title 為空或等於站名時只用站名，否則「title｜站名」（PageMeta::fullTitle）。 */

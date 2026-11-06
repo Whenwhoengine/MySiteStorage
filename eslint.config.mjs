@@ -113,6 +113,13 @@ export default tseslint.config(
     },
   },
   {
+    // E2E 的 page.evaluate 回呼在瀏覽器裡執行
+    files: ['tests/e2e/**/*.mjs'],
+    languageOptions: {
+      globals: { window: 'readonly', document: 'readonly', getComputedStyle: 'readonly' },
+    },
+  },
+  {
     // 測試與 CI 腳本在 Node.js 執行，可以用 fetch 打本機測試伺服器
     files: ['tests/**/*.{ts,tsx,mjs,js}', '*.config.{mjs,ts,js}', 'playwright.config.*'],
     rules: {

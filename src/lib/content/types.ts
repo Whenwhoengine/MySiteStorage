@@ -188,7 +188,8 @@ export interface SearchViewProps {
 
 /** 錯誤畫面需要的資訊（404／503／500）。 */
 export interface ErrorInfo {
-  status: 404 | 500 | 503;
+  /** 400 只出現在網址本身無法解析時（例如百分比編碼殘缺），由 Next.js 判定。 */
+  status: 400 | 404 | 500 | 503;
   /** 固定的正體中文說明（比照 Laravel ErrorCode／ErrorRenderer 的訊息）。 */
   message: string;
   /** 請求編號（32 碼十六進位）。 */
