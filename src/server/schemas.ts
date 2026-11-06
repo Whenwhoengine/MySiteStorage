@@ -7,6 +7,13 @@ import { z } from 'zod';
 const isoUtc = z.string().regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
 const sitePath = z.string().regex(/^\/[^\s]*$/);
 const nonNegativeInt = z.int().min(0);
+// JSON Schema 的 minLength／maxLength 以 Unicode 字元（code point）計算；zod 的 .max() 以 UTF-16 單位計算，所以另寫
+const codePoints = (min: number, max: number) =>
+  z.string().refine((s) => {
+    const n = [...s].length;
+    return n >= min && n <= max;
+  }, `長度須為 ${min}～${max} 個字元`);
+const slugString = codePoints(1, 200);
 
 export const ImageSchema = z.strictObject({
   url: z.string(),
@@ -16,7 +23,7 @@ export const ImageSchema = z.strictObject({
 });
 
 export const TermSchema = z.strictObject({
-  slug: z.string().min(1).max(200),
+  slug: slugString,
   name: z.string(),
   path: sitePath,
   count: nonNegativeInt.nullable(),
@@ -73,7 +80,7 @@ const contentType = z.enum(['post', 'video', 'podcast', 'page']);
 
 const summaryShape = {
   type: contentType,
-  slug: z.string().min(1).max(200),
+  slug: slugString,
   path: sitePath,
   title: z.string(),
   excerpt: z.string(),
@@ -160,7 +167,7 @@ export const HomeResponseSchema = z.strictObject({
 });
 
 export const ListResponseSchema = z.strictObject({
-  data: z.array(ContentSummarySchema),
+  data: z.array(ContentSummarySchema).max(12),
   meta: PaginationSchema,
   collection: CollectionSchema,
   seo: SeoSchema,
@@ -189,7 +196,7 @@ export const TaxonomyResponseSchema = z.strictObject({
 
 export const SearchResponseSchema = z.strictObject({
   data: z.strictObject({
-    q: z.string().max(100),
+    q: codePoints(0, 100),
     type: contentType.nullable(),
     searched: z.boolean(),
     items: z.array(ContentSummarySchema).max(12),

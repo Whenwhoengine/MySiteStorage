@@ -96,6 +96,23 @@ export default tseslint.config(
     },
   },
   {
+    // .mjs 腳本在 Node.js 執行（TypeScript 檔由型別檢查負責未定義名稱）
+    files: ['**/*.mjs'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        Buffer: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        fetch: 'readonly',
+        AbortSignal: 'readonly',
+      },
+    },
+  },
+  {
     // 測試與 CI 腳本在 Node.js 執行，可以用 fetch 打本機測試伺服器
     files: ['tests/**/*.{ts,tsx,mjs,js}', '*.config.{mjs,ts,js}', 'playwright.config.*'],
     rules: {
