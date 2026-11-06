@@ -12,81 +12,300 @@
   },
   "mocks": {
     "from": "mysite CI run 42204645736（提交 5f7580d，content 範圍，全新 testing 環境）的 mock-export 產出 gha-42204645736-1-content",
-    "manifest_contract_sha256": "9b1f7404d8b6dce15f6ad8321833ac05fc40a1fbd3b5e6eec3cdef2863dbb422"
+    "contract_sha256_in_manifest": "9b1f7404d8b6dce15f6ad8321833ac05fc40a1fbd3b5e6eec3cdef2863dbb422"
   },
-  "files": {
-    "contracts/public-api-v1.openapi.json": "9b1f7404d8b6dce15f6ad8321833ac05fc40a1fbd3b5e6eec3cdef2863dbb422",
-    "contracts/dom-hooks.json": "df9ed70e5e613d63957aaf0dc07b7f6b6eaccbcf85f7ce06a48ebff025526a26",
-    "contracts/samples/manifest.json": "4599e5f9e29e4f6d14628307b6972b9bd5d3b56c8975cc94df5e3a47f5e02f92",
-    "contracts/samples/valid/articles.index.empty.json": "c0a3850482cdd7f0a194adcef1f0ad0ed37c2df5f4e9e9f8a104610799838f3f",
-    "contracts/samples/valid/articles.index.json": "456077cf8e9cc82191fece4af19de31edddba251f902f2856659d6a1dac3d892",
-    "contracts/samples/valid/articles.index.page2.json": "59532a3f58e6d5082cb81f1f9a9dfa7096ddfa00820be65a0485a0986fb7c006",
-    "contracts/samples/valid/articles.show.cn-slug.json": "1205f441d63af3fead67a014956026aac0edac7f890a91bffe3e69a808cc9b5f",
-    "contracts/samples/valid/articles.show.empty-body.json": "ebd9e3e72d778bcf57f7b3a26014c7d2c21b7285542508743ee87e3821ecc90d",
-    "contracts/samples/valid/articles.show.json": "e6007b0d47300266b722c2bc8c02111a03bc9a4d4ab4ef7bb2124b7a80ae591e",
-    "contracts/samples/valid/articles.show.long-title-no-cover.json": "6070c3434e3ef8cf79a7f33afe4647c74652e653075844542ba70078ec77553c",
-    "contracts/samples/valid/articles.show.slug200.json": "5f96d85989cd4f32a83a4b53457fa1580e04c1f07df95442921941a910bd69dc",
-    "contracts/samples/valid/categories.show.listing.empty.json": "54c81d98486e3da54a66fb7ebf962e8c746d071849c8fe73c6b89911a052ce40",
-    "contracts/samples/valid/categories.show.overview.json": "fb8e1b9169bc4079187553b73465e208ee1c50ee6a6af218f6a457b09a548e92",
-    "contracts/samples/valid/error.404.articles.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.articles.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.categories.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.pages.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.podcasts.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.podcasts.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.search.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.tags.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.videos.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.404.videos.show.json": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51",
-    "contracts/samples/valid/error.422.search.json": "5e2769d521858247ae00003a3aa17543bfec5f86db1f203258f0582ee8bab880",
-    "contracts/samples/valid/error.503.articles.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.articles.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.categories.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.home.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.model.json": "9c6a662ad35383bae53cf0aa4f066ae796d2bbe63fb943d2a4d5cc4a2607d34b",
-    "contracts/samples/valid/error.503.pages.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.podcasts.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.podcasts.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.search.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.site.maintenance.json": "b65c2dcdd3811c7e25c4e3278cde52f1b48416312b4db4898f79c5dd968ae6c0",
-    "contracts/samples/valid/error.503.tags.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.videos.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/error.503.videos.show.json": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7",
-    "contracts/samples/valid/home.empty.json": "7f94e6f476db8f254b9a7e25614ddb845ef0b5b6f653d3e873825b71486ce692",
-    "contracts/samples/valid/home.ok.json": "054436234bc43f08cedfc799c363ca73ef41156e90d3db1eb22a41ab9905944a",
-    "contracts/samples/valid/pages.show.json": "4b6ebf3495846ce2581bbd5ed8103d68b034628969a4039a1d9cde8f11a6e4bc",
-    "contracts/samples/valid/podcasts.index.empty.json": "3bc157c2651828b18c4f4c9456c5a8f382d2d4eeb7395c2fbe6f5e7dd6d132ee",
-    "contracts/samples/valid/podcasts.index.json": "e8bfa1e742921f6e2a326740ba1d01fe6bb23d528cb22944bc6e16000305dce8",
-    "contracts/samples/valid/podcasts.show.audio-unavailable.json": "188821a5527edf3ae6c4e9b6d8940a1de07b75b2d861331ac87daa485c4480db",
-    "contracts/samples/valid/podcasts.show.json": "3eacb3a7a00fc82e5a09d5f425ae484042cb295d68aaf23d3c0e77df86358e30",
-    "contracts/samples/valid/search.initial.json": "8ccafb16e88d08e1a731095dcfd586392d8776dbbf5be8046cb60743cff44eec",
-    "contracts/samples/valid/search.results.json": "8a44b887f8dc234815adc600b68e24cef3c9edf574b271d5417fc6da83cfce4b",
-    "contracts/samples/valid/search.zero.json": "aa476dd10e3356490f15755558b271f97246ba88dd0b43e8b9eaf816418bf493",
-    "contracts/samples/valid/site.fallback.json": "97561fda93e0e8489baecbe17958f17306cdbcbeead9c48df185e73930583b0c",
-    "contracts/samples/valid/site.ok.json": "9f26eec89db4e060a9d331e02551adb2ebcba0036a46c1bf050c96dcdd8de28b",
-    "contracts/samples/valid/tags.show.listing.json": "b1416a5749b7bed7bffad735f59be4ba3d523d72767445f65a7835cbeb720b79",
-    "contracts/samples/valid/tags.show.overview.empty.json": "cc588ff691f45966844529f6bfb4c83802fcedc010b01974aa3e5ef3c24ddbdf",
-    "contracts/samples/valid/videos.index.empty.json": "bd64aaa6c1058c72528d45a8bbf9be9a0b0d26832ea09c0d4bc07adb75cde3bb",
-    "contracts/samples/valid/videos.index.json": "ca266d9217684daed159084fb15fb4b4c578996f334af993d6adb541cb488ec9",
-    "contracts/samples/valid/videos.show.invalid-id.json": "c9aab432162acea3ab64930f6167a7f8f19834c22960b4c81b5fcb18a87d15f2",
-    "contracts/samples/valid/videos.show.json": "398bff08bb4820d8600537c6e8d619bb06ffe27bf92db6c61d34c41da3d449f3",
-    "contracts/samples/invalid/articles.index.missing-meta.json": "1cc35970d97bd73c9e02e5a35b914ec433f02aa2e41a86d2b21f3c1b1d6a6aa0",
-    "contracts/samples/invalid/articles.index.too-many.json": "888af28b79b5c7d7f4d0f48e40140ae38719fe0ba42c07f8eeb0577c3aec26d3",
-    "contracts/samples/invalid/articles.show.bad-date.json": "2b1eabd1e205519d74ccb9e340ecb575ac473b303ae51315cd687aeb7431b77c",
-    "contracts/samples/invalid/articles.show.canonical-absolute.json": "bc8af601bdbad0d19255067ed8be2f8493b2b804bfbd99dc94cc923ba1e1e634",
-    "contracts/samples/invalid/articles.show.email-field.json": "24707e2017c65302d1fe67b946f44c108558fcd6ae230f9b8e32325d993bc5d2",
-    "contracts/samples/invalid/articles.show.extra-internal-id.json": "94b956cc71334b7546e6680ee5b4f052e275de47826dd470dd65f2294f73f7d7",
-    "contracts/samples/invalid/articles.show.missing-content-html.json": "307952cf65c6686a0bc06622d9830b67dc5314165d0eb8db62414c7088fdb8d7",
-    "contracts/samples/invalid/error.bad-request-id.json": "f5379d834ac4e558f219c6336418d845238a4ed9353220a0db4c286e8fd20a4b",
-    "contracts/samples/invalid/error.extra-trace.json": "d4dd2ba2ac66dfbfd9842b755ce88b58e2cb714ffd6a6d58994105528d70b2e8",
-    "contracts/samples/invalid/home.too-many-posts.json": "77cdd5bb59e9d7d86d04dc4fa2da23eac4d2e64b0a2fc985dd5981097fd57a88",
-    "contracts/samples/invalid/podcasts.show.bad-mime.json": "b9aca1c1dc3b40504f2c69d8addc6c26fadeed16966ea07f6e53ffb5c8a1faac",
-    "contracts/samples/invalid/search.q-too-long.json": "70fb219737bbd8fc73b7e10d5ae82fba2981c36505be40165ad6130593cf0a36",
-    "contracts/samples/invalid/site.missing-fallback.json": "4a4ee1371ddc6f7df69bccd29ae136bbcd708f1ca35eeb274f016bc3aed58098",
-    "contracts/samples/invalid/site.social-http.json": "18ab03eeed40580898a6ecb4893a8c6a0dc65c9fc5a62afe6d96b613579241db",
-    "contracts/samples/invalid/videos.show.bad-youtube-id.json": "c1e842750e4819580d2e79558e7f23b42df6da3ae5571adaec730450138e42b4",
-    "contracts/samples/invalid/videos.show.embed-not-nocookie.json": "6138b5a15d33f37242df8c518f559f706cbed2915904bbbad9b50f35f223c757"
-  }
+  "files": [
+    {
+      "path": "contracts/public-api-v1.openapi.json",
+      "sha256": "9b1f7404d8b6dce15f6ad8321833ac05fc40a1fbd3b5e6eec3cdef2863dbb422"
+    },
+    {
+      "path": "contracts/dom-hooks.json",
+      "sha256": "df9ed70e5e613d63957aaf0dc07b7f6b6eaccbcf85f7ce06a48ebff025526a26"
+    },
+    {
+      "path": "contracts/samples/manifest.json",
+      "sha256": "4599e5f9e29e4f6d14628307b6972b9bd5d3b56c8975cc94df5e3a47f5e02f92"
+    },
+    {
+      "path": "contracts/samples/valid/articles.index.empty.json",
+      "sha256": "c0a3850482cdd7f0a194adcef1f0ad0ed37c2df5f4e9e9f8a104610799838f3f"
+    },
+    {
+      "path": "contracts/samples/valid/articles.index.json",
+      "sha256": "456077cf8e9cc82191fece4af19de31edddba251f902f2856659d6a1dac3d892"
+    },
+    {
+      "path": "contracts/samples/valid/articles.index.page2.json",
+      "sha256": "59532a3f58e6d5082cb81f1f9a9dfa7096ddfa00820be65a0485a0986fb7c006"
+    },
+    {
+      "path": "contracts/samples/valid/articles.show.cn-slug.json",
+      "sha256": "1205f441d63af3fead67a014956026aac0edac7f890a91bffe3e69a808cc9b5f"
+    },
+    {
+      "path": "contracts/samples/valid/articles.show.empty-body.json",
+      "sha256": "ebd9e3e72d778bcf57f7b3a26014c7d2c21b7285542508743ee87e3821ecc90d"
+    },
+    {
+      "path": "contracts/samples/valid/articles.show.json",
+      "sha256": "e6007b0d47300266b722c2bc8c02111a03bc9a4d4ab4ef7bb2124b7a80ae591e"
+    },
+    {
+      "path": "contracts/samples/valid/articles.show.long-title-no-cover.json",
+      "sha256": "6070c3434e3ef8cf79a7f33afe4647c74652e653075844542ba70078ec77553c"
+    },
+    {
+      "path": "contracts/samples/valid/articles.show.slug200.json",
+      "sha256": "5f96d85989cd4f32a83a4b53457fa1580e04c1f07df95442921941a910bd69dc"
+    },
+    {
+      "path": "contracts/samples/valid/categories.show.listing.empty.json",
+      "sha256": "54c81d98486e3da54a66fb7ebf962e8c746d071849c8fe73c6b89911a052ce40"
+    },
+    {
+      "path": "contracts/samples/valid/categories.show.overview.json",
+      "sha256": "fb8e1b9169bc4079187553b73465e208ee1c50ee6a6af218f6a457b09a548e92"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.articles.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.articles.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.categories.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.pages.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.podcasts.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.podcasts.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.search.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.tags.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.videos.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.404.videos.show.json",
+      "sha256": "dfeb940a6d34281bbea10f25dfe6cf13077fbf64c7e91e40c1529e22648c2c51"
+    },
+    {
+      "path": "contracts/samples/valid/error.422.search.json",
+      "sha256": "5e2769d521858247ae00003a3aa17543bfec5f86db1f203258f0582ee8bab880"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.articles.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.articles.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.categories.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.home.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.model.json",
+      "sha256": "9c6a662ad35383bae53cf0aa4f066ae796d2bbe63fb943d2a4d5cc4a2607d34b"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.pages.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.podcasts.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.podcasts.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.search.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.site.maintenance.json",
+      "sha256": "b65c2dcdd3811c7e25c4e3278cde52f1b48416312b4db4898f79c5dd968ae6c0"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.tags.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.videos.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/error.503.videos.show.json",
+      "sha256": "7538336902b7dc18afb39b151eb3b4ce90cf91c357d32fa62bbf5b73125eaba7"
+    },
+    {
+      "path": "contracts/samples/valid/home.empty.json",
+      "sha256": "7f94e6f476db8f254b9a7e25614ddb845ef0b5b6f653d3e873825b71486ce692"
+    },
+    {
+      "path": "contracts/samples/valid/home.ok.json",
+      "sha256": "054436234bc43f08cedfc799c363ca73ef41156e90d3db1eb22a41ab9905944a"
+    },
+    {
+      "path": "contracts/samples/valid/pages.show.json",
+      "sha256": "4b6ebf3495846ce2581bbd5ed8103d68b034628969a4039a1d9cde8f11a6e4bc"
+    },
+    {
+      "path": "contracts/samples/valid/podcasts.index.empty.json",
+      "sha256": "3bc157c2651828b18c4f4c9456c5a8f382d2d4eeb7395c2fbe6f5e7dd6d132ee"
+    },
+    {
+      "path": "contracts/samples/valid/podcasts.index.json",
+      "sha256": "e8bfa1e742921f6e2a326740ba1d01fe6bb23d528cb22944bc6e16000305dce8"
+    },
+    {
+      "path": "contracts/samples/valid/podcasts.show.audio-unavailable.json",
+      "sha256": "188821a5527edf3ae6c4e9b6d8940a1de07b75b2d861331ac87daa485c4480db"
+    },
+    {
+      "path": "contracts/samples/valid/podcasts.show.json",
+      "sha256": "3eacb3a7a00fc82e5a09d5f425ae484042cb295d68aaf23d3c0e77df86358e30"
+    },
+    {
+      "path": "contracts/samples/valid/search.initial.json",
+      "sha256": "8ccafb16e88d08e1a731095dcfd586392d8776dbbf5be8046cb60743cff44eec"
+    },
+    {
+      "path": "contracts/samples/valid/search.results.json",
+      "sha256": "8a44b887f8dc234815adc600b68e24cef3c9edf574b271d5417fc6da83cfce4b"
+    },
+    {
+      "path": "contracts/samples/valid/search.zero.json",
+      "sha256": "aa476dd10e3356490f15755558b271f97246ba88dd0b43e8b9eaf816418bf493"
+    },
+    {
+      "path": "contracts/samples/valid/site.fallback.json",
+      "sha256": "97561fda93e0e8489baecbe17958f17306cdbcbeead9c48df185e73930583b0c"
+    },
+    {
+      "path": "contracts/samples/valid/site.ok.json",
+      "sha256": "9f26eec89db4e060a9d331e02551adb2ebcba0036a46c1bf050c96dcdd8de28b"
+    },
+    {
+      "path": "contracts/samples/valid/tags.show.listing.json",
+      "sha256": "b1416a5749b7bed7bffad735f59be4ba3d523d72767445f65a7835cbeb720b79"
+    },
+    {
+      "path": "contracts/samples/valid/tags.show.overview.empty.json",
+      "sha256": "cc588ff691f45966844529f6bfb4c83802fcedc010b01974aa3e5ef3c24ddbdf"
+    },
+    {
+      "path": "contracts/samples/valid/videos.index.empty.json",
+      "sha256": "bd64aaa6c1058c72528d45a8bbf9be9a0b0d26832ea09c0d4bc07adb75cde3bb"
+    },
+    {
+      "path": "contracts/samples/valid/videos.index.json",
+      "sha256": "ca266d9217684daed159084fb15fb4b4c578996f334af993d6adb541cb488ec9"
+    },
+    {
+      "path": "contracts/samples/valid/videos.show.invalid-id.json",
+      "sha256": "c9aab432162acea3ab64930f6167a7f8f19834c22960b4c81b5fcb18a87d15f2"
+    },
+    {
+      "path": "contracts/samples/valid/videos.show.json",
+      "sha256": "398bff08bb4820d8600537c6e8d619bb06ffe27bf92db6c61d34c41da3d449f3"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.index.missing-meta.json",
+      "sha256": "1cc35970d97bd73c9e02e5a35b914ec433f02aa2e41a86d2b21f3c1b1d6a6aa0"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.index.too-many.json",
+      "sha256": "888af28b79b5c7d7f4d0f48e40140ae38719fe0ba42c07f8eeb0577c3aec26d3"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.show.bad-date.json",
+      "sha256": "2b1eabd1e205519d74ccb9e340ecb575ac473b303ae51315cd687aeb7431b77c"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.show.canonical-absolute.json",
+      "sha256": "bc8af601bdbad0d19255067ed8be2f8493b2b804bfbd99dc94cc923ba1e1e634"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.show.email-field.json",
+      "sha256": "24707e2017c65302d1fe67b946f44c108558fcd6ae230f9b8e32325d993bc5d2"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.show.extra-internal-id.json",
+      "sha256": "94b956cc71334b7546e6680ee5b4f052e275de47826dd470dd65f2294f73f7d7"
+    },
+    {
+      "path": "contracts/samples/invalid/articles.show.missing-content-html.json",
+      "sha256": "307952cf65c6686a0bc06622d9830b67dc5314165d0eb8db62414c7088fdb8d7"
+    },
+    {
+      "path": "contracts/samples/invalid/error.bad-request-id.json",
+      "sha256": "f5379d834ac4e558f219c6336418d845238a4ed9353220a0db4c286e8fd20a4b"
+    },
+    {
+      "path": "contracts/samples/invalid/error.extra-trace.json",
+      "sha256": "d4dd2ba2ac66dfbfd9842b755ce88b58e2cb714ffd6a6d58994105528d70b2e8"
+    },
+    {
+      "path": "contracts/samples/invalid/home.too-many-posts.json",
+      "sha256": "77cdd5bb59e9d7d86d04dc4fa2da23eac4d2e64b0a2fc985dd5981097fd57a88"
+    },
+    {
+      "path": "contracts/samples/invalid/podcasts.show.bad-mime.json",
+      "sha256": "b9aca1c1dc3b40504f2c69d8addc6c26fadeed16966ea07f6e53ffb5c8a1faac"
+    },
+    {
+      "path": "contracts/samples/invalid/search.q-too-long.json",
+      "sha256": "70fb219737bbd8fc73b7e10d5ae82fba2981c36505be40165ad6130593cf0a36"
+    },
+    {
+      "path": "contracts/samples/invalid/site.missing-fallback.json",
+      "sha256": "4a4ee1371ddc6f7df69bccd29ae136bbcd708f1ca35eeb274f016bc3aed58098"
+    },
+    {
+      "path": "contracts/samples/invalid/site.social-http.json",
+      "sha256": "18ab03eeed40580898a6ecb4893a8c6a0dc65c9fc5a62afe6d96b613579241db"
+    },
+    {
+      "path": "contracts/samples/invalid/videos.show.bad-youtube-id.json",
+      "sha256": "c1e842750e4819580d2e79558e7f23b42df6da3ae5571adaec730450138e42b4"
+    },
+    {
+      "path": "contracts/samples/invalid/videos.show.embed-not-nocookie.json",
+      "sha256": "6138b5a15d33f37242df8c518f559f706cbed2915904bbbad9b50f35f223c757"
+    }
+  ]
 }

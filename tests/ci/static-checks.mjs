@@ -99,7 +99,7 @@ else if (read('AI_RULES.md') !== read('AGENTS.md')) fail('RULES', 'AGENTS.md 與
 
 // ── 契約副本雜湊（v1 §6.8 第 5 步） ──
 const source = JSON.parse(read('contracts/SOURCE.json'));
-for (const [file, hash] of Object.entries(source.files)) {
+for (const { path: file, sha256: hash } of source.files) {
   const actual = createHash('sha256').update(readFileSync(path.join(ROOT, file))).digest('hex');
   if (actual !== hash) fail('CONTRACT', `${file} 與 contracts/SOURCE.json 記錄的雜湊不同`);
 }

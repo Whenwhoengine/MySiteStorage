@@ -48,8 +48,8 @@ interface SampleEntry {
 }
 
 describe('契約副本', () => {
-  const source = readJson('contracts/SOURCE.json') as { files: Record<string, string> };
-  it.each(Object.entries(source.files))('%s 與記錄的雜湊一致', (file, hash) => {
+  const source = readJson('contracts/SOURCE.json') as { files: { path: string; sha256: string }[] };
+  it.each(source.files.map((f) => [f.path, f.sha256] as const))('%s 與記錄的雜湊一致', (file, hash) => {
     expect(sha256(read(file))).toBe(hash);
   });
   it('假資料 manifest 的契約雜湊與副本一致', () => {

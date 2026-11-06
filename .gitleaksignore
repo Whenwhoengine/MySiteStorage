@@ -1,0 +1,4 @@
+# gitleaks 誤判豁免（只列逐筆指紋，不放寬規則）。
+# contracts/SOURCE.json 在提交 b954c80 以「檔名: SHA-256」記錄契約副本雜湊，檔名含 api，被 generic-api-key 規則誤判；
+# 那是公開檔案的雜湊，不是金鑰。之後已改成 path／sha256 欄位格式，不再觸發。
+b954c80cc26ac4c4cf604c4c2f992af5454ebb45:contracts/SOURCE.json:generic-api-key:18
