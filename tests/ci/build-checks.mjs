@@ -39,8 +39,10 @@ function scan(dir) {
   for (const name of readdirSync(dir)) {
     const full = path.join(dir, name);
     const relative = path.relative(ROOT, full).split(path.sep).join('/');
-    // .next/dev 是 next dev 的輸出（Next.js 16 與正式建置分開），不是正式產物；建置快取 .next/cache 一併掃描
+    // .next/dev 是 next dev 的輸出（Next.js 16 與正式建置分開），不是正式產物
     if (relative === '.next/dev') continue;
+    // .next/cache 是建置快取（壓縮前的原始碼模組，不進映像）：只查假資料哨兵與 data-dyad-*
+    const inCache = relative.startsWith('.next/cache/');
     const st = statSync(full);
     if (st.isDirectory()) {
       scan(full);
@@ -49,6 +51,7 @@ function scan(dir) {
     const buf = readFileSync(full);
     scanned += 1;
     for (const [id, needle, label] of needles) {
+      if (inCache && id === 'DEV') continue;
       if (buf.includes(Buffer.from(needle, 'utf8'))) fail(id, `${relative} 含${label}`);
     }
   }

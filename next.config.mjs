@@ -12,6 +12,9 @@ const nextConfig = {
   images: { unoptimized: true },
   // 正式產物不帶原始碼地圖（v1 §6.9）
   productionBrowserSourceMaps: false,
+  // next dev 偵測到 AI 代理時會自動寫入 AGENTS.md（Next.js 16.4 預設開啟），會改到受保護的 AGENTS.md、
+  // 也違反零啟動自改寫封條（FE-19），所以關閉（官方選項，見 node_modules/next/dist/server/config-shared.d.ts 的 agentRules）
+  agentRules: false,
   // 假資料讀取器以 fs 讀 mocks/；不得被追蹤進 standalone（v1 §6.9、M-17、FE-09）
   outputFileTracingExcludes: {
     '*': ['mocks/**', 'public/mock-media/**', 'tests/**', 'contracts/**'],
