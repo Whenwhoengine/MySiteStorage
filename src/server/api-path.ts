@@ -14,6 +14,7 @@ export function lastValue(value: string | string[] | undefined): string | undefi
 }
 
 // 控制字元（C0 與 DEL）一律不收
+// eslint-disable-next-line no-control-regex -- 刻意比對控制字元
 const CONTROL_CHARS = /[\u0000-\u001f\u007f]/;
 
 /** 已解碼的 slug 是否合格（Next.js 傳進來的路由參數已解碼）。 */

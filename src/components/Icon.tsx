@@ -82,7 +82,10 @@ function Paths({ name }: { name: IconName }) {
   }
 }
 
-/** 一般圖示：1.15em 見方；inline 版本 0.95em 並在左邊留一點間距（比照 .icon、.icon--inline）。 */
+/**
+ * 一般圖示：1.15em 見方；inline 版本 0.95em 並在左邊留一點間距（比照 .icon、.icon--inline）。
+ * Tailwind 的基礎樣式把 svg 設成 block，這裡固定為 inline-block，才能跟文字排在同一行。
+ */
 export function Icon({
   name,
   inline = false,
@@ -98,7 +101,7 @@ export function Icon({
   const size = sizeClass ?? (inline ? 'ml-[0.3em] size-[0.95em]' : 'size-[1.15em]');
   return (
     <svg
-      className={`${size} flex-none align-[-0.18em] ${className}`}
+      className={`inline-block ${size} flex-none align-[-0.18em] ${className}`.trim()}
       viewBox="0 0 24 24"
       width="20"
       height="20"

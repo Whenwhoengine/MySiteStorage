@@ -26,6 +26,8 @@
   --color-surface-overlay: rgb(15 17 21 / 0.74);
   --color-surface-scrim: rgb(0 0 0 / 0.8);
   --color-surface-scrim-soft: rgb(0 0 0 / 0.55);
+  --color-surface-scrim-faint: rgb(0 0 0 / 0.12);
+  --color-surface-scrim-strong: rgb(0 0 0 / 0.58);
   --color-line: #2e3440;
   --color-line-strong: #4a5263;
   --color-line-audio: #4d3a17;

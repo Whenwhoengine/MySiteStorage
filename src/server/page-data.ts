@@ -9,28 +9,16 @@
 // 3. 404、503 由頁面自己設 res.statusCode（不用 notFound: true，v1 §4.3 第 4 步）。
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import type { z } from 'zod';
-import type { ErrorInfo, SiteInfo } from '@/lib/content/types';
+import type { SiteInfo } from '@/lib/content/types';
+import { ERROR_MESSAGES, errorHead, fullTitle } from '@/lib/errors';
 import type { HeadProps, PageProps, ShellProps } from '@/lib/page-props';
+export { ERROR_HEADINGS, ERROR_MESSAGES, errorHead, fullTitle } from '@/lib/errors';
 import { getJson, type FetchResult } from './api-client';
 import { siteRequest, type ApiRequest } from './api-path';
 import { serverConfig, type ServerConfig } from './config';
 import { toSiteInfo } from './mappers';
 import { requestIdFrom } from './request-id';
 import { SiteResponseSchema, type ApiSeo } from './schemas';
-
-export const ERROR_HEADINGS: Record<ErrorInfo['status'], string> = {
-  404: '找不到這個頁面',
-  500: '系統發生錯誤',
-  503: '內容暫時無法讀取',
-};
-
-/** 錯誤說明（比照 Laravel ErrorCode::publicMessage 與 ErrorRenderer）。 */
-export const ERROR_MESSAGES = {
-  contentNotFound: '找不到這個內容。',
-  pageNotFound: '找不到這個頁面。',
-  unavailable: '內容暫時無法讀取，請稍後再試。',
-  internal: '系統發生錯誤，請稍後再試。',
-} as const;
 
 export interface RequestContext {
   config: ServerConfig;
@@ -64,11 +52,6 @@ export function shellProps(rc: RequestContext, site: SiteInfo | null): ShellProp
   };
 }
 
-/** 組 <title>：title 為空或等於站名時只用站名，否則「title｜站名」（PageMeta::fullTitle）。 */
-export function fullTitle(title: string, siteName: string): string {
-  return title === '' || title === siteName ? siteName : `${title}｜${siteName}`;
-}
-
 function absoluteUrl(origin: string, pathOrUrl: string): string {
   return pathOrUrl.startsWith('/') && !pathOrUrl.startsWith('//') ? `${origin}${pathOrUrl}` : pathOrUrl;
 }
@@ -90,10 +73,6 @@ export function headFromSeo(seo: ApiSeo, siteName: string, config: ServerConfig)
     },
     siteName,
   };
-}
-
-export function errorHead(status: ErrorInfo['status'], siteName: string): HeadProps {
-  return { title: fullTitle(ERROR_HEADINGS[status], siteName), description: null, canonical: null, robots: 'noindex, nofollow', og: null, siteName };
 }
 
 /** 錯誤頁的 props（404／503；500 由 _error 產生）。 */
