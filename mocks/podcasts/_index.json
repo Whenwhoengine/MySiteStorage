@@ -1,0 +1,105 @@
+{
+    "data": [
+        {
+            "type": "podcast",
+            "slug": "sample-podcast-episode-1",
+            "path": "/podcasts/sample-podcast-episode-1",
+            "title": "示例 Podcast 第 1 集：媒體庫音訊",
+            "excerpt": "MSMOCK-7F3A9C1E 示例內容：音訊為系統產生的 3 秒測試音。",
+            "published_at": "2026-10-27T02:00:00Z",
+            "modified_at": "2026-10-27T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面三：墨綠色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-media",
+                    "name": "影音（示例）",
+                    "path": "/categories/sample-media",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                },
+                {
+                    "slug": "sample-audio",
+                    "name": "音訊",
+                    "path": "/tags/sample-audio",
+                    "count": null
+                }
+            ],
+            "duration_seconds": 3,
+            "is_sample": true
+        },
+        {
+            "type": "podcast",
+            "slug": "sample-podcast-episode-2",
+            "path": "/podcasts/sample-podcast-episode-2",
+            "title": "示例 Podcast 第 2 集：核准網址音訊",
+            "excerpt": "MSMOCK-7F3A9C1E 示例內容：音訊以 CMS 主機上的網址提供。",
+            "published_at": "2026-10-25T02:00:00Z",
+            "modified_at": "2026-10-25T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面四：土黃色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-media",
+                    "name": "影音（示例）",
+                    "path": "/categories/sample-media",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                },
+                {
+                    "slug": "sample-audio",
+                    "name": "音訊",
+                    "path": "/tags/sample-audio",
+                    "count": null
+                }
+            ],
+            "duration_seconds": 4,
+            "is_sample": true
+        }
+    ],
+    "meta": {
+        "page": 1,
+        "per_page": 12,
+        "total": 2,
+        "total_pages": 1
+    },
+    "collection": {
+        "type": "podcast",
+        "label": "Podcast",
+        "title": "Podcast 節目",
+        "lede": "可直接收聽的音訊節目，附節目簡介。"
+    },
+    "seo": {
+        "title": "Podcast 節目",
+        "description": "MSMOCK-7F3A9C1E 可直接收聽的音訊節目，附節目簡介。",
+        "canonical_path": "/podcasts",
+        "noindex": false,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

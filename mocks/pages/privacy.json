@@ -1,0 +1,29 @@
+{
+    "data": {
+        "type": "page",
+        "slug": "privacy",
+        "path": "/pages/privacy",
+        "title": "隱私說明（示例內容）",
+        "excerpt": "MSMOCK-7F3A9C1E 本頁為示例內容，描述本站目前的實際技術行為；正式上線前需由網站管理者確認並補上正式聯絡方式。 YouTube 影片 影片頁預設只顯示封面與播放按鈕，不會自動連線到 YouTube。只有在你點擊播放後，才會以 youtube-nocookie…",
+        "published_at": "2026-11-06T10:47:18Z",
+        "modified_at": "2026-11-06T10:47:18Z",
+        "author_name": "示例編輯",
+        "cover": null,
+        "categories": [],
+        "tags": [],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本頁為<strong>示例內容</strong>，描述本站目前的實際技術行為；正式上線前需由網站管理者確認並補上正式聯絡方式。</p>\n\n\n\n<h2 class=\"wp-block-heading\">YouTube 影片</h2>\n\n\n\n<p class=\"wp-block-paragraph\">影片頁預設只顯示封面與播放按鈕，不會自動連線到 YouTube。只有在你點擊播放後，才會以 youtube-nocookie.com 網域載入 YouTube 播放器；載入後 YouTube 可能依其自身政策處理資料或設定 cookie。</p>\n\n\n\n<h2 class=\"wp-block-heading\">音訊與圖片</h2>\n\n\n\n<p class=\"wp-block-paragraph\">Podcast 音訊與文章圖片由本站的內容管理主機（CMS）直接提供，不經第三方媒體服務或廣告網路。</p>\n\n\n\n<h2 class=\"wp-block-heading\">Cookie</h2>\n\n\n\n<ul class=\"wp-block-list\">\n<li>主站使用 Laravel 的工作階段 cookie（mysite_app_session）與防偽造請求 cookie（XSRF-TOKEN），用於維持瀏覽狀態與模擬購物車，不用於追蹤或廣告。</li>\n\n\n\n<li>編輯者使用草稿預覽時，主站會設定只在預覽路徑有效的 mysite_preview cookie。</li>\n\n\n\n<li>內容管理系統（WordPress）的登入 cookie 只在編輯者登入 CMS 後臺時使用，一般訪客瀏覽主站不會取得。</li>\n</ul>\n\n\n\n<h2 class=\"wp-block-heading\">分析與追蹤</h2>\n\n\n\n<p class=\"wp-block-paragraph\">本站目前不使用任何網站分析、廣告或跨站追蹤工具。</p>\n\n\n\n<h2 class=\"wp-block-heading\">模擬商店</h2>\n\n\n\n<p class=\"wp-block-paragraph\">本站的商店功能僅供模擬，不會收集信用卡號、真實地址或電話，也不會產生真實交易。</p>\n\n\n\n<h2 class=\"wp-block-heading\">聯絡方式</h2>\n\n\n\n<p class=\"wp-block-paragraph\">正式的隱私聯絡方式尚待網站管理者提供。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "隱私說明（示例內容）",
+        "description": "MSMOCK-7F3A9C1E 本頁為示例內容，描述本站目前的實際技術行為；正式上線前需由網站管理者確認並補上正式聯絡方式。 YouTube 影片 影片頁預設只顯示封面與播放按鈕，不會自動連線…",
+        "canonical_path": "/pages/privacy",
+        "noindex": false,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

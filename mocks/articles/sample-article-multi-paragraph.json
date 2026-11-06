@@ -1,0 +1,54 @@
+{
+    "data": {
+        "type": "post",
+        "slug": "sample-article-multi-paragraph",
+        "path": "/articles/sample-article-multi-paragraph",
+        "title": "示例內容：多段落閱讀排版",
+        "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 第一段：示例文字用來確認段落間距、行高與字級在不同裝置上的可讀性。 第二段：中文段落與 English words 混排，檢查斷行與標點擠壓是否自然。…",
+        "published_at": "2026-11-01T02:00:00Z",
+        "modified_at": "2026-11-01T02:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面四：土黃色背景與幾何圖形",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [
+            {
+                "slug": "sample-notes",
+                "name": "隨筆（示例）",
+                "path": "/categories/sample-notes",
+                "count": null
+            }
+        ],
+        "tags": [
+            {
+                "slug": "sample-layout",
+                "name": "版面測試",
+                "path": "/tags/sample-layout",
+                "count": null
+            },
+            {
+                "slug": "sample",
+                "name": "示例",
+                "path": "/tags/sample",
+                "count": null
+            }
+        ],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本文為系統產生的<strong>示例內容</strong>，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>\n\n\n\n<p class=\"wp-block-paragraph\">第一段：示例文字用來確認段落間距、行高與字級在不同裝置上的可讀性。</p>\n\n\n\n<p class=\"wp-block-paragraph\">第二段：中文段落與 English words 混排，檢查斷行與標點擠壓是否自然。</p>\n\n\n\n<p class=\"wp-block-paragraph\">第三段：段落中的<a href=\"https://example.com/\" rel=\"noopener noreferrer nofollow\">外部連結示例</a>應以主站樣式呈現。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例內容：多段落閱讀排版",
+        "description": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 第一段：示例文字用來確認段落間距、行高與字級在不同裝置上的可讀…",
+        "canonical_path": "/articles/sample-article-multi-paragraph",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面四：土黃色背景與幾何圖形"
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "data": {
+        "type": "post",
+        "slug": "msmock-edge-long-title",
+        "path": "/articles/msmock-edge-long-title",
+        "title": "示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種",
+        "excerpt": "MSMOCK-7F3A9C1E 示例邊界案例：標題超過 200 字。",
+        "published_at": "2026-11-01T00:00:00Z",
+        "modified_at": "2026-11-01T00:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面（邊界案例）",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [],
+        "tags": [],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p>本文為系統產生的示例邊界案例，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p><figure><img src=\"/mock-media/mock-inline.png\" alt=\"示例圖片（邊界案例）\" width=\"1200\" height=\"630\" loading=\"lazy\" decoding=\"async\"><figcaption>示例圖說</figcaption></figure>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種寬度下能否正常換行而不溢出版面。示例邊界案例：這是一個刻意加長的中文標題，用來測試卡片、標題區、麵包屑與分享區塊在各種",
+        "description": "MSMOCK-7F3A9C1E 示例邊界案例：標題超過 200 字。",
+        "canonical_path": "/articles/msmock-edge-long-title",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面（邊界案例）"
+    }
+}

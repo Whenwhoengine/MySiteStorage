@@ -1,0 +1,29 @@
+{
+    "data": {
+        "type": "page",
+        "slug": "contact",
+        "path": "/pages/contact",
+        "title": "聯絡（示例內容）",
+        "excerpt": "MSMOCK-7F3A9C1E 本頁為示例內容。正式聯絡方式尚待網站管理者提供。 本站首版不提供線上聯絡表單，也不會透過本頁收集任何個人資料。",
+        "published_at": "2026-11-06T10:47:18Z",
+        "modified_at": "2026-11-06T10:47:18Z",
+        "author_name": "示例編輯",
+        "cover": null,
+        "categories": [],
+        "tags": [],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本頁為<strong>示例內容</strong>。正式聯絡方式尚待網站管理者提供。</p>\n\n\n\n<p class=\"wp-block-paragraph\">本站首版不提供線上聯絡表單，也不會透過本頁收集任何個人資料。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "聯絡（示例內容）",
+        "description": "MSMOCK-7F3A9C1E 本頁為示例內容。正式聯絡方式尚待網站管理者提供。 本站首版不提供線上聯絡表單，也不會透過本頁收集任何個人資料。",
+        "canonical_path": "/pages/contact",
+        "noindex": false,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

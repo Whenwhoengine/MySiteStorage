@@ -1,0 +1,59 @@
+{
+    "data": {
+        "type": "podcast",
+        "slug": "sample-podcast-episode-2",
+        "path": "/podcasts/sample-podcast-episode-2",
+        "title": "示例 Podcast 第 2 集：核准網址音訊",
+        "excerpt": "MSMOCK-7F3A9C1E 示例內容：音訊以 CMS 主機上的網址提供。",
+        "published_at": "2026-10-25T02:00:00Z",
+        "modified_at": "2026-10-25T02:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面四：土黃色背景與幾何圖形",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [
+            {
+                "slug": "sample-media",
+                "name": "影音（示例）",
+                "path": "/categories/sample-media",
+                "count": null
+            }
+        ],
+        "tags": [
+            {
+                "slug": "sample",
+                "name": "示例",
+                "path": "/tags/sample",
+                "count": null
+            },
+            {
+                "slug": "sample-audio",
+                "name": "音訊",
+                "path": "/tags/sample-audio",
+                "count": null
+            }
+        ],
+        "duration_seconds": 4,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本文為系統產生的<strong>示例內容</strong>，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>\n\n\n\n<p class=\"wp-block-paragraph\">本集音訊以核准主機（本 CMS）的網址欄位提供，用來測試「音訊網址」路徑。</p>",
+        "video": null,
+        "podcast": {
+            "audio_url": "/mock-media/mock-audio.wav",
+            "audio_mime": "audio/wav",
+            "duration_seconds": 4,
+            "audio_unavailable": false
+        }
+    },
+    "seo": {
+        "title": "示例 Podcast 第 2 集：核准網址音訊",
+        "description": "MSMOCK-7F3A9C1E 示例內容：音訊以 CMS 主機上的網址提供。",
+        "canonical_path": "/podcasts/sample-podcast-episode-2",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面四：土黃色背景與幾何圖形"
+    }
+}

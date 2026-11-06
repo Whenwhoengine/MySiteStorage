@@ -1,0 +1,334 @@
+{
+    "data": [
+        {
+            "type": "post",
+            "slug": "sample-gutenberg-blocks",
+            "path": "/articles/sample-gutenberg-blocks",
+            "title": "示例內容：Gutenberg 區塊格式驗收",
+            "excerpt": "MSMOCK-7F3A9C1E 示例內容：涵蓋段落、標題、圖片與圖說、引用、列表、連結、分隔線、程式碼、表格與封面區塊的驗收文章。",
+            "published_at": "2026-11-05T02:00:00Z",
+            "modified_at": "2026-11-05T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面一：深藍色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-tech",
+                    "name": "技術（示例）",
+                    "path": "/categories/sample-tech",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample-gutenberg",
+                    "name": "Gutenberg 區塊",
+                    "path": "/tags/sample-gutenberg",
+                    "count": null
+                },
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-very-long-title",
+            "path": "/articles/sample-very-long-title",
+            "title": "示例內容：這是一個刻意設計得非常非常長的中文標題，用來測試主站在桌面、平板與手機寬度下的換行、截斷與版面配置是否仍然正常，並確認卡片、麵包屑與相關連結區塊都不會因為標題過長而溢出容器或遮住其他內容",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 這篇示例文章的重點是標題長度；正文保持簡短。",
+            "published_at": "2026-11-04T02:00:00Z",
+            "modified_at": "2026-11-04T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面二：酒紅色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample-layout",
+                    "name": "版面測試",
+                    "path": "/tags/sample-layout",
+                    "count": null
+                },
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-long-url",
+            "path": "/articles/sample-long-url",
+            "title": "示例內容：含超長網址的文章",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 以下是一個刻意很長、沒有空白的網址，用來測試窄螢幕換行： https://example.com/sample/very/long/path/that/…",
+            "published_at": "2026-11-03T02:00:00Z",
+            "modified_at": "2026-11-03T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面三：墨綠色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-tech",
+                    "name": "技術（示例）",
+                    "path": "/categories/sample-tech",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample-layout",
+                    "name": "版面測試",
+                    "path": "/tags/sample-layout",
+                    "count": null
+                },
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-article-no-cover",
+            "path": "/articles/sample-article-no-cover",
+            "title": "示例內容：沒有封面圖的文章",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 這篇示例文章刻意不設定封面，用來測試主站在缺少圖片時的版面。",
+            "published_at": "2026-11-02T02:00:00Z",
+            "modified_at": "2026-11-02T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": null,
+            "categories": [
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-article-multi-paragraph",
+            "path": "/articles/sample-article-multi-paragraph",
+            "title": "示例內容：多段落閱讀排版",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 第一段：示例文字用來確認段落間距、行高與字級在不同裝置上的可讀性。 第二段：中文段落與 English words 混排，檢查斷行與標點擠壓是否自然。…",
+            "published_at": "2026-11-01T02:00:00Z",
+            "modified_at": "2026-11-01T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面四：土黃色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample-layout",
+                    "name": "版面測試",
+                    "path": "/tags/sample-layout",
+                    "count": null
+                },
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-article-taxonomy",
+            "path": "/articles/sample-article-taxonomy",
+            "title": "示例內容：分類與標籤展示",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 這篇示例文章同時屬於多個標籤，用來測試分類與標籤彙整頁。",
+            "published_at": "2026-10-31T02:00:00Z",
+            "modified_at": "2026-10-31T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面五：紫色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-media",
+                    "name": "影音（示例）",
+                    "path": "/categories/sample-media",
+                    "count": null
+                },
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample-video",
+                    "name": "影片",
+                    "path": "/tags/sample-video",
+                    "count": null
+                },
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                },
+                {
+                    "slug": "sample-audio",
+                    "name": "音訊",
+                    "path": "/tags/sample-audio",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-article-manual-excerpt",
+            "path": "/articles/sample-article-manual-excerpt",
+            "title": "示例內容：手動摘要",
+            "excerpt": "MSMOCK-7F3A9C1E 這是手動填寫的示例摘要，主站列表應優先顯示這段文字。",
+            "published_at": "2026-10-29T02:00:00Z",
+            "modified_at": "2026-10-29T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面一：深藍色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        },
+        {
+            "type": "post",
+            "slug": "sample-article-older",
+            "path": "/articles/sample-article-older",
+            "title": "示例內容：較早發布的文章",
+            "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 發布日期較早，用來測試列表排序與分頁。",
+            "published_at": "2026-10-07T02:00:00Z",
+            "modified_at": "2026-10-07T02:00:00Z",
+            "author_name": "示例編輯",
+            "cover": {
+                "url": "/mock-media/mock-cover.png",
+                "alt": "示例封面二：酒紅色背景與幾何圖形",
+                "width": 1200,
+                "height": 630
+            },
+            "categories": [
+                {
+                    "slug": "sample-notes",
+                    "name": "隨筆（示例）",
+                    "path": "/categories/sample-notes",
+                    "count": null
+                }
+            ],
+            "tags": [
+                {
+                    "slug": "sample",
+                    "name": "示例",
+                    "path": "/tags/sample",
+                    "count": null
+                }
+            ],
+            "duration_seconds": null,
+            "is_sample": true
+        }
+    ],
+    "meta": {
+        "page": 1,
+        "per_page": 12,
+        "total": 8,
+        "total_pages": 1
+    },
+    "collection": {
+        "type": "post",
+        "label": "文章",
+        "title": "文章",
+        "lede": "長文、筆記與幕後紀錄。"
+    },
+    "seo": {
+        "title": "文章",
+        "description": "MSMOCK-7F3A9C1E 長文、筆記與幕後紀錄。",
+        "canonical_path": "/articles",
+        "noindex": false,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

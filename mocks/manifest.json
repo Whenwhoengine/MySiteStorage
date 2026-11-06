@@ -1,0 +1,517 @@
+{
+    "format": "mysite-api-mocks/1",
+    "description": "mysite 公開 API 假資料（前端假資料模式用）。只含示例內容；媒體網址已改寫為 /mock-media/ 的合成檔；每份檔案都含哨兵字串。檔案路徑皆相對於匯出根目錄（與前端儲存庫根目錄的 mocks/、public/mock-media/ 對應）。",
+    "generated_at": "2026-11-06T10:48:40Z",
+    "app_env": "testing",
+    "sentinel": "MSMOCK-7F3A9C1E",
+    "contract": {
+        "file": "app/resources/contracts/public-api-v1.openapi.json",
+        "version": "1.0.0",
+        "sha256": "9b1f7404d8b6dce15f6ad8321833ac05fc40a1fbd3b5e6eec3cdef2863dbb422"
+    },
+    "rules": {
+        "only_sample_content": true,
+        "media_base": "/mock-media/",
+        "rewritten_fields": [
+            "*.cover.url",
+            "site.logo.url",
+            "seo.og_image",
+            "podcast.audio_url（audio_mime 改為 audio/wav）",
+            "content_html 內 <img src>"
+        ],
+        "kept_fields": [
+            "video.watch_url",
+            "video.embed_url"
+        ],
+        "sentinel_fields": [
+            "site.tagline",
+            "*.excerpt",
+            "*.content_html（開頭加 <p> 段落）",
+            "seo.description"
+        ],
+        "revalidated_against_contract": true
+    },
+    "search_query": "示例",
+    "skipped": [],
+    "files": [
+        {
+            "file": "mocks/site.json",
+            "kind": "export",
+            "api_path": "/api/v1/site",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "getSite",
+            "operation_path": "/api/v1/site",
+            "method": "GET",
+            "status": 200,
+            "sha256": "3ecae7aa72961ae67e05c1ee9793e0bb924624f8c7304a21ca051b611db7c1e0"
+        },
+        {
+            "file": "mocks/home.json",
+            "kind": "export",
+            "api_path": "/api/v1/home",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "getHome",
+            "operation_path": "/api/v1/home",
+            "method": "GET",
+            "status": 200,
+            "sha256": "f64e5420027e26745877f215747c40bca1b0820c42130f7ec1a5d9b478478b90"
+        },
+        {
+            "file": "mocks/articles/_index.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "list_articles",
+            "operation_path": "/api/v1/articles",
+            "method": "GET",
+            "status": 200,
+            "sha256": "6ef669271b273df9741ff3c16a0977f7e96fb08142b548bf4bc86eb2ae286978"
+        },
+        {
+            "file": "mocks/articles/sample-gutenberg-blocks.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-gutenberg-blocks",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "5585dd291afdda7dfcd030b31a7626891fdcfe9c8e4ff1f5fe85bc0279859e0c"
+        },
+        {
+            "file": "mocks/articles/sample-very-long-title.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-very-long-title",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "602c24dc0637d07a05542f0eab584f9f50632f1e5995703f3931a1fcc7a1d64f"
+        },
+        {
+            "file": "mocks/articles/sample-long-url.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-long-url",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "0144bb2b26f69933b5e51756a345d379b3ecced9c545c795910bfe52e08a62a6"
+        },
+        {
+            "file": "mocks/articles/sample-article-no-cover.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-article-no-cover",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "799c789dc81d3accf852a8b0c7c0b5f78a19faef7f902252086bbf252d822e84"
+        },
+        {
+            "file": "mocks/articles/sample-article-multi-paragraph.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-article-multi-paragraph",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "5abade93c7530a48299f50739d4d9574ae1cbdc50b9f1952c1957ea5ff980b2d"
+        },
+        {
+            "file": "mocks/articles/sample-article-taxonomy.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-article-taxonomy",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "849d39cbded0797add9eda36b50d58dcfdac4ee91747a6351bca48e9ad360579"
+        },
+        {
+            "file": "mocks/articles/sample-article-manual-excerpt.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-article-manual-excerpt",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "c81fd83e64de1f089d861cce6df5f2da79ba3c3088db29826fa3fae9e9ca9f1f"
+        },
+        {
+            "file": "mocks/articles/sample-article-older.json",
+            "kind": "export",
+            "api_path": "/api/v1/articles/sample-article-older",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "2a30c4d5233474af91f13951db5ae905d27d680e28b537571f8435435299a324"
+        },
+        {
+            "file": "mocks/videos/_index.json",
+            "kind": "export",
+            "api_path": "/api/v1/videos",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "list_videos",
+            "operation_path": "/api/v1/videos",
+            "method": "GET",
+            "status": 200,
+            "sha256": "a0a27d8f647960fe404e12f8076db9c48334ba776915d7582235fcb1f16ad39e"
+        },
+        {
+            "file": "mocks/videos/sample-video-1.json",
+            "kind": "export",
+            "api_path": "/api/v1/videos/sample-video-1",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_videos",
+            "operation_path": "/api/v1/videos/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "add4add5e530f3c4fb860d7a19c0cb747958199e5e89931ec589fef91c815d9c"
+        },
+        {
+            "file": "mocks/videos/sample-video-2.json",
+            "kind": "export",
+            "api_path": "/api/v1/videos/sample-video-2",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_videos",
+            "operation_path": "/api/v1/videos/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "5f2f6157a5b8b360773f80a0175b7e98bb1e4343b91fd3a146d6318a525d9fdc"
+        },
+        {
+            "file": "mocks/videos/sample-video-3.json",
+            "kind": "export",
+            "api_path": "/api/v1/videos/sample-video-3",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_videos",
+            "operation_path": "/api/v1/videos/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "c9c294231cefec5a912d02b727dbf241129145ef6fe8908c65080a8ea951da27"
+        },
+        {
+            "file": "mocks/podcasts/_index.json",
+            "kind": "export",
+            "api_path": "/api/v1/podcasts",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "list_podcasts",
+            "operation_path": "/api/v1/podcasts",
+            "method": "GET",
+            "status": 200,
+            "sha256": "b3d81468638b722c5e8884874aae2fc35c6881f5370ad60bd25975c28b38fbda"
+        },
+        {
+            "file": "mocks/podcasts/sample-podcast-episode-1.json",
+            "kind": "export",
+            "api_path": "/api/v1/podcasts/sample-podcast-episode-1",
+            "requested_at": "2026-11-06T10:48:38Z",
+            "operation_id": "show_podcasts",
+            "operation_path": "/api/v1/podcasts/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "e62c7040a7f959bd6c8686198d1ee659efaf6c96ab8e668ad3d937906e965743"
+        },
+        {
+            "file": "mocks/podcasts/sample-podcast-episode-2.json",
+            "kind": "export",
+            "api_path": "/api/v1/podcasts/sample-podcast-episode-2",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_podcasts",
+            "operation_path": "/api/v1/podcasts/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "ad693ae0637d35931a3e10ec652ef49fc9d1a1f038253cca89b5ac6144c6ba96"
+        },
+        {
+            "file": "mocks/pages/about.json",
+            "kind": "export",
+            "api_path": "/api/v1/pages/about",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_pages",
+            "operation_path": "/api/v1/pages/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "072a066d5450a4074113398d18ae9b1e02158f1dbc1df6e5357922e67a6d5c83"
+        },
+        {
+            "file": "mocks/pages/privacy.json",
+            "kind": "export",
+            "api_path": "/api/v1/pages/privacy",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_pages",
+            "operation_path": "/api/v1/pages/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "f8224c5a1d73353d376ad85bb1e078096256cca9a043ec0125684f575238df1d"
+        },
+        {
+            "file": "mocks/pages/contact.json",
+            "kind": "export",
+            "api_path": "/api/v1/pages/contact",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_pages",
+            "operation_path": "/api/v1/pages/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "2608bbdde10800c18e003028a90b51720b841be71c9183211b58fe5c4931a734"
+        },
+        {
+            "file": "mocks/categories/sample-media.json",
+            "kind": "export",
+            "api_path": "/api/v1/categories/sample-media",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_categories",
+            "operation_path": "/api/v1/categories/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "57d15e99de6ce50a952abf4bc0328059b64407032a03e23c1114bde78a776491"
+        },
+        {
+            "file": "mocks/categories/sample-notes.json",
+            "kind": "export",
+            "api_path": "/api/v1/categories/sample-notes",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_categories",
+            "operation_path": "/api/v1/categories/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "95191c19e00f29d2bb67c80e5c3850837a6032e4b3ba52599de044ce685adaf3"
+        },
+        {
+            "file": "mocks/categories/sample-tech.json",
+            "kind": "export",
+            "api_path": "/api/v1/categories/sample-tech",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_categories",
+            "operation_path": "/api/v1/categories/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "d8f899ecd56d77fc78136a3bcee892f3375032dbf972574c6a7f04195fde91ed"
+        },
+        {
+            "file": "mocks/tags/sample.json",
+            "kind": "export",
+            "api_path": "/api/v1/tags/sample",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_tags",
+            "operation_path": "/api/v1/tags/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "9ad2b832044dcd5bb263746671c27369dff0109484ec82a49b7f812b54d8f866"
+        },
+        {
+            "file": "mocks/tags/sample-audio.json",
+            "kind": "export",
+            "api_path": "/api/v1/tags/sample-audio",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_tags",
+            "operation_path": "/api/v1/tags/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "7d9ffaabee19c200b9d6e6e2f4c0668546e7921347d257f4eb35d742c5f4eba3"
+        },
+        {
+            "file": "mocks/tags/sample-gutenberg.json",
+            "kind": "export",
+            "api_path": "/api/v1/tags/sample-gutenberg",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_tags",
+            "operation_path": "/api/v1/tags/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "f1a00465a2f987ec4a0fe48f3c926c2a9600cdea1f5a26604193c18cbf1e96d8"
+        },
+        {
+            "file": "mocks/tags/sample-layout.json",
+            "kind": "export",
+            "api_path": "/api/v1/tags/sample-layout",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_tags",
+            "operation_path": "/api/v1/tags/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "bdafdfb0c07a95ecf1adc59b0f057c8746b4561abb9afc916c4a2c82ec3facbe"
+        },
+        {
+            "file": "mocks/tags/sample-video.json",
+            "kind": "export",
+            "api_path": "/api/v1/tags/sample-video",
+            "requested_at": "2026-11-06T10:48:39Z",
+            "operation_id": "show_tags",
+            "operation_path": "/api/v1/tags/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "7d5a6fc254e1e2be3c6cfdb1a92ef03775cd01b365fde4cc1446d4891d84cb81"
+        },
+        {
+            "file": "mocks/search/empty.json",
+            "kind": "export",
+            "api_path": "/api/v1/search",
+            "requested_at": "2026-11-06T10:48:40Z",
+            "operation_id": "search",
+            "operation_path": "/api/v1/search",
+            "method": "GET",
+            "status": 200,
+            "sha256": "524c828e6627570bd43b798629f36dfb165c916fa1f13bf27a10e4f84852c615"
+        },
+        {
+            "file": "mocks/search/results.json",
+            "kind": "export",
+            "api_path": "/api/v1/search?q=%E7%A4%BA%E4%BE%8B",
+            "requested_at": "2026-11-06T10:48:40Z",
+            "operation_id": "search",
+            "operation_path": "/api/v1/search",
+            "method": "GET",
+            "status": 200,
+            "sha256": "e767ca5390e50d5d11d458665a2f476882bc87fcedb1c768c85dd47ca2693898"
+        },
+        {
+            "file": "mocks/edge/long-title.json",
+            "kind": "edge",
+            "scenario": "long-title",
+            "description": "超長中文標題（220 字）；正文含一張圖片",
+            "api_path": "/api/v1/articles/msmock-edge-long-title",
+            "requested_at": null,
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "53628beb4fb460e3e5ec2f939b703e57b3c2ecd0c2d3db57f43d82679304cf75"
+        },
+        {
+            "file": "mocks/edge/long-url.json",
+            "kind": "edge",
+            "scenario": "long-url",
+            "description": "超長網址（717 字元、無空白）出現在摘要與正文連結",
+            "api_path": "/api/v1/articles/msmock-edge-long-url",
+            "requested_at": null,
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "fca8b57d16fefb07efdc6e2574b06225989527dcf9546c301217356cd030575e"
+        },
+        {
+            "file": "mocks/edge/no-cover.json",
+            "kind": "edge",
+            "scenario": "no-cover",
+            "description": "無封面（cover 與 seo.og_image 皆為 null）",
+            "api_path": "/api/v1/articles/msmock-edge-no-cover",
+            "requested_at": null,
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "9d8a4e6413269a184599a67079f4d872cfce82deb28fc93dba0232fda321efd8"
+        },
+        {
+            "file": "mocks/edge/empty-list.json",
+            "kind": "edge",
+            "scenario": "empty-list",
+            "description": "零篇列表（文章列表第 1 頁、total 0）",
+            "api_path": "/api/v1/articles",
+            "requested_at": null,
+            "operation_id": "list_articles",
+            "operation_path": "/api/v1/articles",
+            "method": "GET",
+            "status": 200,
+            "sha256": "857c966d78cd7c2b62e0117641223bbb55559597ed55fc4defe99b5597cd7bcc"
+        },
+        {
+            "file": "mocks/edge/video-unavailable.json",
+            "kind": "edge",
+            "scenario": "video-unavailable",
+            "description": "影片 ID 不合法（由 MediaPolicy 判定 video_unavailable: true）",
+            "api_path": "/api/v1/videos/msmock-edge-video-unavailable",
+            "requested_at": null,
+            "operation_id": "show_videos",
+            "operation_path": "/api/v1/videos/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "ead2f003f373f8161cb038439a74889b0e503fce2728c00fcc49de31e0a6304c"
+        },
+        {
+            "file": "mocks/edge/audio-unavailable.json",
+            "kind": "edge",
+            "scenario": "audio-unavailable",
+            "description": "音訊不可播（來源不在允許清單，由 MediaPolicy 判定 audio_unavailable: true；簡介照常提供）",
+            "api_path": "/api/v1/podcasts/msmock-edge-audio-unavailable",
+            "requested_at": null,
+            "operation_id": "show_podcasts",
+            "operation_path": "/api/v1/podcasts/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "8741db0ba9471eac759adff5c8a5264a687308442dc692bc8fcc6cd1692c8814"
+        },
+        {
+            "file": "mocks/edge/chinese-slug.json",
+            "kind": "edge",
+            "scenario": "chinese-slug",
+            "description": "中文 slug（path 為百分比編碼）",
+            "api_path": "/api/v1/articles/%E7%A4%BA%E4%BE%8B%E4%B8%AD%E6%96%87%E7%B6%B2%E5%9D%80%E9%82%8A%E7%95%8C%E6%A1%88%E4%BE%8B",
+            "requested_at": null,
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "4449d1a6ccc0bdad07e92ceaa6c1d06c75977083625dae82b63a91b399e6b808"
+        },
+        {
+            "file": "mocks/edge/slug-200.json",
+            "kind": "edge",
+            "scenario": "slug-200",
+            "description": "slug 恰為 200 字",
+            "api_path": "/api/v1/articles/msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge-slug-200-msmock-edge",
+            "requested_at": null,
+            "operation_id": "show_articles",
+            "operation_path": "/api/v1/articles/{slug}",
+            "method": "GET",
+            "status": 200,
+            "sha256": "87dc7d7fdb62a17de3802d1ecfaf5a38a158050b1b90e2deaab8847784ad8df2"
+        }
+    ],
+    "media": [
+        {
+            "file": "public/mock-media/mock-cover.png",
+            "url": "/mock-media/mock-cover.png",
+            "mime": "image/png",
+            "bytes": 76,
+            "sha256": "3cb5e600b7ed6f8e361ac74561a9135fe78846b2d8e4c0add60844bfb9a8c3e5",
+            "description": "封面與 og_image 共用的合成單色圖（16×9）"
+        },
+        {
+            "file": "public/mock-media/mock-logo.png",
+            "url": "/mock-media/mock-logo.png",
+            "mime": "image/png",
+            "bytes": 74,
+            "sha256": "42fadaab90b61b71b023f303213fc559a7fc632a94e650d9bfa31fb628b7dec6",
+            "description": "網站標誌的合成單色圖（8×8）"
+        },
+        {
+            "file": "public/mock-media/mock-inline.png",
+            "url": "/mock-media/mock-inline.png",
+            "mime": "image/png",
+            "bytes": 77,
+            "sha256": "e04a4dc15a0e2113706fd341746579d8c5d5cc0bd7685e5c3160ff2cbf10038e",
+            "description": "正文 content_html 內圖片的合成單色圖（16×9）"
+        },
+        {
+            "file": "public/mock-media/mock-audio.wav",
+            "url": "/mock-media/mock-audio.wav",
+            "mime": "audio/wav",
+            "bytes": 8044,
+            "sha256": "cc6b659211639f2ebad187bddf44141407b490f75ada78998e4af7a5336980c6",
+            "description": "Podcast 音訊的合成靜音（PCM 16 位元、單聲道、8000 Hz、0.5 秒）"
+        }
+    ]
+}

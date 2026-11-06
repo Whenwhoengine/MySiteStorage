@@ -1,0 +1,73 @@
+{
+    "data": {
+        "name": "mysite",
+        "tagline": "MSMOCK-7F3A9C1E",
+        "author_bio": "（示例內容）作者介紹待網站管理者提供；在此之前本站不陳述作者的任何經歷。",
+        "social_links": [
+            {
+                "label": "示例連結（example.com）",
+                "url": "https://example.com/"
+            }
+        ],
+        "logo": {
+            "url": "/mock-media/mock-logo.png",
+            "alt": "示例標誌：mysite 字樣",
+            "width": 512,
+            "height": 512
+        },
+        "is_sample": true,
+        "fallback": false,
+        "menus": {
+            "primary": [
+                {
+                    "label": "首頁",
+                    "url": "/",
+                    "external": false
+                },
+                {
+                    "label": "文章",
+                    "url": "/articles",
+                    "external": false
+                },
+                {
+                    "label": "影片",
+                    "url": "/videos",
+                    "external": false
+                },
+                {
+                    "label": "Podcast",
+                    "url": "/podcasts",
+                    "external": false
+                },
+                {
+                    "label": "關於",
+                    "url": "/pages/about",
+                    "external": false
+                }
+            ],
+            "footer": [
+                {
+                    "label": "隱私說明",
+                    "url": "/pages/privacy",
+                    "external": false
+                },
+                {
+                    "label": "聯絡",
+                    "url": "/pages/contact",
+                    "external": false
+                },
+                {
+                    "label": "RSS",
+                    "url": "/feed.xml",
+                    "external": false
+                },
+                {
+                    "label": "外部連結示例（example.com）",
+                    "url": "https://example.com/",
+                    "external": true
+                }
+            ]
+        },
+        "commerce_enabled": false
+    }
+}

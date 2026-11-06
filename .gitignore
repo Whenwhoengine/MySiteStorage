@@ -6,6 +6,10 @@ coverage/
 playwright-report/
 test-results/
 *.log
+*.tsbuildinfo
+
+# Next.js 每次 dev／build／typegen 都會重新產生；官方建議不進版控（定案執行書 §4.10）
+next-env.d.ts
 
 # MyDyad 的工作資料夾（MyDyad 會自動追加 .dyad/；.mydyad 是它讀專案時排除的自家資料夾）
 .dyad/

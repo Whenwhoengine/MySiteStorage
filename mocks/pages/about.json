@@ -1,0 +1,29 @@
+{
+    "data": {
+        "type": "page",
+        "slug": "about",
+        "path": "/pages/about",
+        "title": "關於（示例內容）",
+        "excerpt": "MSMOCK-7F3A9C1E 本頁為示例內容。正式的網站與作者介紹將由網站管理者提供後更新；在那之前，本站不陳述作者的任何經歷或身分資訊。 本站是一個個人影音部落格的示範環境，內容包含文章、影片與 Podcast。",
+        "published_at": "2026-11-06T10:47:18Z",
+        "modified_at": "2026-11-06T10:47:18Z",
+        "author_name": "示例編輯",
+        "cover": null,
+        "categories": [],
+        "tags": [],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本頁為<strong>示例內容</strong>。正式的網站與作者介紹將由網站管理者提供後更新；在那之前，本站不陳述作者的任何經歷或身分資訊。</p>\n\n\n\n<p class=\"wp-block-paragraph\">本站是一個個人影音部落格的示範環境，內容包含文章、影片與 Podcast。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "關於（示例內容）",
+        "description": "MSMOCK-7F3A9C1E 本頁為示例內容。正式的網站與作者介紹將由網站管理者提供後更新；在那之前，本站不陳述作者的任何經歷或身分資訊。 本站是一個個人影音部落格的示範環境，內容…",
+        "canonical_path": "/pages/about",
+        "noindex": false,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}
