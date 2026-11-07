@@ -1,0 +1,47 @@
+{
+  "name": "mysitestorage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MySite 公開網站前端（Next.js Pages Router，伺服器渲染）",
+  "packageManager": "npm@11.20.0",
+  "engines": {
+    "node": "^24.0.0 || ^26.0.0"
+  },
+  "scripts": {
+    "dev": "next dev --webpack -H localhost",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "contract:types": "openapi-typescript contracts/public-api-v1.openapi.json -o src/lib/content/api-contract.d.ts",
+    "check:static": "node tests/ci/static-checks.mjs",
+    "check:build": "node tests/ci/build-checks.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@dyad-sh/nextjs-webpack-component-tagger": "0.8.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "10.14.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "openapi-typescript": "7.13.0",
+    "postcss": "8.5.32",
+    "tailwindcss": "4.3.5",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.72.1",
+    "vite": "8.3.6",
+    "vitest": "5.1.0"
+  }
+}

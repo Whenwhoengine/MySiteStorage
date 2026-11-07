@@ -1,0 +1,18 @@
+{
+    "data": {
+        "q": "",
+        "type": null,
+        "searched": false,
+        "items": []
+    },
+    "meta": null,
+    "seo": {
+        "title": "搜尋",
+        "description": "MSMOCK-7F3A9C1E 搜尋站內文章、影片與 Podcast。",
+        "canonical_path": "/search",
+        "noindex": true,
+        "og_type": "website",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

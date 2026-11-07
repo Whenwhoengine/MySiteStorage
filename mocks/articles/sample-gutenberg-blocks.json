@@ -1,0 +1,54 @@
+{
+    "data": {
+        "type": "post",
+        "slug": "sample-gutenberg-blocks",
+        "path": "/articles/sample-gutenberg-blocks",
+        "title": "示例內容：Gutenberg 區塊格式驗收",
+        "excerpt": "MSMOCK-7F3A9C1E 示例內容：涵蓋段落、標題、圖片與圖說、引用、列表、連結、分隔線、程式碼、表格與封面區塊的驗收文章。",
+        "published_at": "2026-11-05T02:00:00Z",
+        "modified_at": "2026-11-05T02:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面一：深藍色背景與幾何圖形",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [
+            {
+                "slug": "sample-tech",
+                "name": "技術（示例）",
+                "path": "/categories/sample-tech",
+                "count": null
+            }
+        ],
+        "tags": [
+            {
+                "slug": "sample-gutenberg",
+                "name": "Gutenberg 區塊",
+                "path": "/tags/sample-gutenberg",
+                "count": null
+            },
+            {
+                "slug": "sample",
+                "name": "示例",
+                "path": "/tags/sample",
+                "count": null
+            }
+        ],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本文為系統產生的<strong>示例內容</strong>，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。本文逐一列出主站必須支援的區塊格式。</p>\n\n\n\n<h2 class=\"wp-block-heading\">第二層標題（H2）</h2>\n\n\n\n<p class=\"wp-block-paragraph\">H2 之下的段落，包含<strong>粗體</strong>、<em>斜體</em>與<a href=\"https://example.com/\" rel=\"noopener noreferrer nofollow\">外部連結（example.com）</a>。</p>\n\n\n\n<h3 class=\"wp-block-heading\">第三層標題（H3）</h3>\n\n\n\n<figure class=\"wp-block-image size-large\"><img width=\"1024\" height=\"538\" src=\"/mock-media/mock-inline.png\" alt=\"示例圖片：酒紅色背景與幾何圖形\" class=\"wp-image-5\" loading=\"lazy\" decoding=\"async\"><figcaption>示例圖說：圖片下方的說明文字。</figcaption></figure>\n\n\n\n<blockquote class=\"wp-block-quote wp-block-quote-is-layout-flow\">\n<p class=\"wp-block-paragraph\">這是一段示例引用文字，用來確認引用區塊的樣式。</p>\n<cite>示例來源</cite></blockquote>\n\n\n\n<ul class=\"wp-block-list\">\n<li>無序列表項目一</li>\n\n\n\n<li>無序列表項目二</li>\n</ul>\n\n\n\n<ol class=\"wp-block-list\">\n<li>有序列表第一步</li>\n\n\n\n<li>有序列表第二步</li>\n</ol>\n\n\n\n<hr>\n\n\n\n<pre class=\"wp-block-code\"><code>&lt;?php\necho '示例程式碼：不會被執行';</code></pre>\n\n\n\n<figure class=\"wp-block-table\"><div class=\"rich-table\"><table class=\"has-fixed-layout\"><thead><tr><th>欄位</th><th>說明</th></tr></thead><tbody><tr><td>示例 A</td><td>表格第一列</td></tr><tr><td>示例 B</td><td>表格第二列</td></tr></tbody></table></div><figcaption>示例表格說明</figcaption></figure>\n\n\n\n<img width=\"1200\" height=\"630\" class=\"wp-image-6\" alt=\"\" src=\"/mock-media/mock-inline.png\" loading=\"lazy\" decoding=\"async\">\n<p class=\"has-text-align-center wp-block-paragraph\">封面區塊上的示例文字</p>\n\n\n\n\n<p class=\"wp-block-paragraph\">以上為全部驗收區塊；主站顯示時應保留語意（標題階層、列表、表格、圖說）與基本排版。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例內容：Gutenberg 區塊格式驗收",
+        "description": "MSMOCK-7F3A9C1E 示例內容：涵蓋段落、標題、圖片與圖說、引用、列表、連結、分隔線、程式碼、表格與封面區塊的驗收文章。",
+        "canonical_path": "/articles/sample-gutenberg-blocks",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面一：深藍色背景與幾何圖形"
+    }
+}

@@ -1,0 +1,39 @@
+{
+    "data": {
+        "type": "podcast",
+        "slug": "msmock-edge-audio-unavailable",
+        "path": "/podcasts/msmock-edge-audio-unavailable",
+        "title": "示例邊界案例：音訊目前無法播放",
+        "excerpt": "MSMOCK-7F3A9C1E 示例邊界案例：音訊來源不合政策，前端應顯示失效狀態並保留簡介。",
+        "published_at": "2026-11-01T00:00:00Z",
+        "modified_at": "2026-11-01T00:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面（邊界案例）",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [],
+        "tags": [],
+        "duration_seconds": 600,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p>本文為系統產生的示例邊界案例，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>",
+        "video": null,
+        "podcast": {
+            "audio_url": null,
+            "audio_mime": null,
+            "duration_seconds": 600,
+            "audio_unavailable": true
+        }
+    },
+    "seo": {
+        "title": "示例邊界案例：音訊目前無法播放",
+        "description": "MSMOCK-7F3A9C1E 示例邊界案例：音訊來源不合政策，前端應顯示失效狀態並保留簡介。",
+        "canonical_path": "/podcasts/msmock-edge-audio-unavailable",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面（邊界案例）"
+    }
+}

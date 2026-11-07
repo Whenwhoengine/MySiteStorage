@@ -1,0 +1,29 @@
+{
+    "data": {
+        "type": "post",
+        "slug": "msmock-edge-no-cover",
+        "path": "/articles/msmock-edge-no-cover",
+        "title": "示例邊界案例：沒有封面的文章",
+        "excerpt": "MSMOCK-7F3A9C1E 示例邊界案例：這篇文章沒有封面圖。",
+        "published_at": "2026-11-01T00:00:00Z",
+        "modified_at": "2026-11-01T00:00:00Z",
+        "author_name": "示例編輯",
+        "cover": null,
+        "categories": [],
+        "tags": [],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p>本文為系統產生的示例邊界案例，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例邊界案例：沒有封面的文章",
+        "description": "MSMOCK-7F3A9C1E 示例邊界案例：這篇文章沒有封面圖。",
+        "canonical_path": "/articles/msmock-edge-no-cover",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": null,
+        "og_image_alt": null
+    }
+}

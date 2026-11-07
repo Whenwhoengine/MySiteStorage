@@ -1,0 +1,40 @@
+{
+    "data": {
+        "type": "video",
+        "slug": "msmock-edge-video-unavailable",
+        "path": "/videos/msmock-edge-video-unavailable",
+        "title": "示例邊界案例：影片目前無法播放",
+        "excerpt": "MSMOCK-7F3A9C1E 示例邊界案例：影片 ID 不合法，前端應顯示失效狀態。",
+        "published_at": "2026-11-01T00:00:00Z",
+        "modified_at": "2026-11-01T00:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面（邊界案例）",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [],
+        "tags": [],
+        "duration_seconds": 120,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p>本文為系統產生的示例邊界案例，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>",
+        "video": {
+            "youtube_id": null,
+            "watch_url": null,
+            "embed_url": null,
+            "duration_seconds": 120,
+            "video_unavailable": true
+        },
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例邊界案例：影片目前無法播放",
+        "description": "MSMOCK-7F3A9C1E 示例邊界案例：影片 ID 不合法，前端應顯示失效狀態。",
+        "canonical_path": "/videos/msmock-edge-video-unavailable",
+        "noindex": false,
+        "og_type": "video.other",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面（邊界案例）"
+    }
+}

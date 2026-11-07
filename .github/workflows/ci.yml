@@ -1,0 +1,214 @@
+# MySiteStorage 主 CI（mysite docs/MySiteReact前端專案v1.md §6.8；定案執行書 §5 M-07、M-11、M-14、M-16）。
+# 觸發：對 main 的 PR 與 main 本身的推送（不對設計分支的推送另跑，避免同一提交出現兩份同名檢查）。
+# 所有外部 Action 以完整 SHA 固定（版本與來源見 mysite docs/版本查核.md）；權限預設唯讀。
+# 受保護路徑守門（pull_request_target）另立 protected-paths.yml；委託人建立 Actions 事件政策（BLK-REACT-POLICY-01）後才會實際觸發。
+# 本檔只以假的 GitHub API 模擬守門工作流程的 shell 步驟（tests/ci/guard-workflow-sim.mjs）。
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: '1'
+  # 與 mysite infra/versions.env 的 NODE_VERSION 相同
+  NODE_VERSION: '26.13.0'
+  # 沿用 mysite infra/versions.env 的 GITLEAKS_IMAGE_REF（docs/版本查核.md）
+  GITLEAKS_IMAGE_REF: zricethezav/gitleaks:v8.30.1@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f
+
+jobs:
+  frontend-ci:
+    name: frontend-ci
+    runs-on: ubuntu-24.04
+    # 實測約 2.5 分鐘（run 42344797282）；留約 8 倍餘裕給冷快取與瀏覽器安裝（比照 mysite 各工作都設時限）
+    timeout-minutes: 20
+    outputs:
+      failed: ${{ steps.summary.outputs.failed }}
+    steps:
+      - name: Checkout（含完整歷史供秘密掃描）
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: 依鎖定檔安裝（FE-01；不執行套件的安裝腳本）
+        id: install
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: 禁用功能、SafeHtml 唯一、AGENTS.md 一致、契約副本雜湊（FE-03、FE-04）
+        id: static
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run check:static
+
+      - name: ESLint
+        id: lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run lint
+
+      - name: 型別檢查（next typegen → tsc；含 zod 與契約型別比對）
+        id: typecheck
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run typecheck
+
+      - name: 契約型別檔與契約副本一致
+        id: contract_types
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: |
+          npm run contract:types
+          git diff --exit-code -- src/lib/content/api-contract.d.ts
+
+      - name: 單元測試（資料層、守門、樣本集、假資料）
+        id: unit
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm test
+
+      - name: 守門工作流程模擬（假的 GitHub API；FE-11 的工作流程層）
+        id: guard_sim
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/ci/guard-workflow-sim.mjs
+
+      - name: 正式建置（FE-02）
+        id: build
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm run build
+
+      - name: 建置產物檢查（FE-02、FE-09：無預先產生頁面、無假資料哨兵、無 data-dyad-*）
+        id: build_checks
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: npm run check:build
+
+      - name: 開發模式實測（元件標記器、只綁本機、零啟動自改寫 FE-19）
+        id: dev_check
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: node tests/ci/dev-check.mjs
+
+      - name: 安裝 Playwright 瀏覽器
+        id: browsers
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: npx playwright install --with-deps chromium
+
+      - name: 假資料 E2E（三種寬度、200% 縮放、axe、掛鉤、錯誤頁、零 cookie、同源）
+        id: e2e
+        if: ${{ !cancelled() && steps.browsers.outcome == 'success' }}
+        run: npm run test:e2e -- --trace off
+
+      - name: 完整 Git 歷史秘密掃描（gitleaks；FE-10）
+        id: gitleaks
+        if: ${{ !cancelled() }}
+        run: docker run --rm -v "$PWD:/repo" -w /repo "docker.io/${GITLEAKS_IMAGE_REF}" git --redact --no-banner --exit-code 1 /repo
+
+      - name: 相依套件稽核（npm audit，比照 mysite dependency-audit 的門檻）
+        id: audit
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: 上傳截圖與測試報告
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: frontend-ci-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: 工作摘要（正體中文）
+        id: summary
+        if: ${{ always() }}
+        env:
+          R_INSTALL: ${{ steps.install.outcome }}
+          R_STATIC: ${{ steps.static.outcome }}
+          R_LINT: ${{ steps.lint.outcome }}
+          R_TYPECHECK: ${{ steps.typecheck.outcome }}
+          R_CONTRACT: ${{ steps.contract_types.outcome }}
+          R_UNIT: ${{ steps.unit.outcome }}
+          R_GUARD_SIM: ${{ steps.guard_sim.outcome }}
+          R_BUILD: ${{ steps.build.outcome }}
+          R_BUILD_CHECKS: ${{ steps.build_checks.outcome }}
+          R_DEV: ${{ steps.dev_check.outcome }}
+          R_E2E: ${{ steps.e2e.outcome }}
+          R_GITLEAKS: ${{ steps.gitleaks.outcome }}
+          R_AUDIT: ${{ steps.audit.outcome }}
+        run: |
+          failed=""
+          {
+            echo "## 前端 CI 結果"
+            echo
+            echo "| 檢查 | 結果 | 沒過時可能原因與處理 |"
+            echo "|---|---|---|"
+            row() {
+              local label="$1" outcome="$2" hint="$3" mark
+              case "$outcome" in
+                success) mark="通過" ;;
+                failure) mark="**沒過**"; failed="${failed}${label}；" ;;
+                skipped|"") mark="未執行（前一步沒過）" ;;
+                *) mark="$outcome" ;;
+              esac
+              echo "| ${label} | ${mark} | ${hint} |"
+            }
+            row "依鎖定檔安裝" "$R_INSTALL" "鎖定檔與 package.json 不一致：交施工者在 Linux 重新產生"
+            row "禁用功能與規則檢查" "$R_STATIC" "改到受保護檔、AGENTS.md 與 AI_RULES.md 不同、出現禁用功能或外部網址：請 MyDyad 移除，或交施工者"
+            row "ESLint" "$R_LINT" "用了 dangerouslySetInnerHTML、fetch、cookie 等禁用寫法：請 MyDyad 改回"
+            row "型別檢查" "$R_TYPECHECK" "改動弄壞了程式或 props：把錯誤貼回 MyDyad，或交施工者"
+            row "契約型別" "$R_CONTRACT" "契約副本改了但型別沒更新：交施工者"
+            row "單元測試" "$R_UNIT" "資料層或格式規則被改動：交施工者"
+            row "守門工作流程模擬" "$R_GUARD_SIM" "守門工作流程或判定腳本被改動：交施工者"
+            row "正式建置" "$R_BUILD" "建置失敗（常見：檔名大小寫）：交施工者"
+            row "建置產物檢查" "$R_BUILD_CHECKS" "正式產物混進假資料、元件標記或開發提示：交施工者"
+            row "開發模式實測" "$R_DEV" "next dev 改寫了檔案、標記器失效或綁到非本機位址：交施工者"
+            row "瀏覽器測試" "$R_E2E" "水平溢位、無障礙、缺測試掛鉤或錯誤頁不對：下載截圖看是哪個寬度，請 MyDyad 修"
+            row "秘密掃描" "$R_GITLEAKS" "疑似把金鑰提交進來：立刻交施工者"
+            row "相依套件稽核" "$R_AUDIT" "套件有高風險弱點：交施工者評估升級"
+            echo
+            echo "截圖與報告在本頁下方的產物（frontend-ci-…）。"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "failed=${failed}" >> "$GITHUB_OUTPUT"
+
+  report:
+    # 失敗時在 PR 留一則正體中文留言（同一則反覆更新）。只讀取上一個工作的結果，不 checkout、不執行 PR 的任何程式（M-16）。
+    name: 失敗留言
+    needs: frontend-ci
+    if: ${{ failure() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - name: 留言或更新留言
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          FAILED: ${{ needs.frontend-ci.outputs.failed }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          marker='<!-- mysitestorage-ci-report -->'
+          body="${marker}
+          ### 前端 CI 沒過
+
+          沒過的項目：${FAILED:-（請看執行頁）}
+
+          每一項的可能原因與處理方式，在[這次執行的工作摘要](${RUN_URL})；三種寬度的截圖在同一頁下方的產物。
+          看不懂或需要改受保護的檔案時，把這個 PR 的網址交給本機 Claude Code 或施工者。"
+          # 只更新自己（github-actions[bot]）留的那一則，不碰別人帶同樣標記的留言
+          existing=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments?per_page=100" --paginate --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"${marker}\"))) | .id" | head -n 1)
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/${REPO}/issues/comments/${existing}" -f body="$body" > /dev/null
+          else
+            gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" -f body="$body" > /dev/null
+          fi

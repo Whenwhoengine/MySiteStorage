@@ -1,0 +1,136 @@
+# 受保護路徑守門（mysite docs/MySiteReact前端專案定案執行.md §4.2、§5.2；驗收 FE-11）。
+# 判定邏輯在 tests/ci/protected-paths.mjs（純函式、單元測試涵蓋）；本檔只負責讀資料、呼叫判定、寫結果與留言。
+#
+# 安全約定（§5.2 第 1、5 項）：
+# - pull_request_target 一律執行預設分支（main）上的本檔，checkout 的也是預設分支的提交（GITHUB_SHA），
+#   只取判定腳本一個檔；不 checkout、不執行 PR 的任何內容，不使用任何秘密。
+# - 分支名、PR 說明、檔名等 PR 欄位一律在執行時以 API 讀成檔案或 shell 變數，不在 run: 裡展開 ${{ }}。
+# - 權限只有讀取內容與 PR（讀變更檔、留言）。
+# 啟用前提：委託人已在本儲存庫建立只允許本檔使用 pull_request_target 的 Actions 事件政策（BLK-REACT-POLICY-01）。
+# 必要檢查名稱＝工作名稱 protected-paths（全儲存庫唯一，不得與 ci.yml 的工作同名），預期來源 GitHub Actions。
+name: protected-paths
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, edited]
+
+permissions: {}
+
+concurrency:
+  group: protected-paths-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  protected-paths:
+    name: protected-paths
+    runs-on: ubuntu-24.04
+    # 只有幾次 API 呼叫與一次判定；逾時視同失敗（不放行）
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: 取預設分支上的判定腳本（不取 PR 的內容）
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: tests/ci/protected-paths.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          # 與 ci.yml 的 NODE_VERSION、mysite infra/versions.env 相同
+          node-version: '26.13.0'
+
+      - name: 判定
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          work="${RUNNER_TEMP}/protected-paths"
+          mkdir -p "$work"
+
+          # 1. 讀 PR 目前的資料（不用事件內容裡的舊值）
+          gh api "repos/${REPO}/pulls/${PR_NUMBER}" > "$work/pr.json"
+          head_sha=$(jq -r '.head.sha' "$work/pr.json")
+          if [ "$head_sha" != "$EVENT_HEAD_SHA" ]; then
+            # 檢查開始前 PR 又推了新提交：本次對舊提交的結果作廢，以新提交那次的檢查為準（不改留言）
+            echo "stale=true" >> "$GITHUB_OUTPUT"
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "這次檢查開始前，PR 已有更新的提交；本次結果作廢，請看最新提交的 protected-paths 檢查。" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "stale=false" >> "$GITHUB_OUTPUT"
+          head_ref=$(jq -r '.head.ref' "$work/pr.json")
+          jq -r '.body // ""' "$work/pr.json" > "$work/body.txt"
+          changed_files=$(jq -r '.changed_files' "$work/pr.json")
+          flags=()
+          if [ "$(jq -r '(.head.repo == null) or (.head.repo.full_name != .base.repo.full_name)' "$work/pr.json")" = "true" ]; then
+            flags+=(--fork)
+          fi
+
+          # 2. 分頁讀完全部變更檔；任何一頁失敗、筆數與 changed_files 不同、或超過 API 上限 3000 筆都算不完整
+          if gh api --paginate --slurp "repos/${REPO}/pulls/${PR_NUMBER}/files?per_page=100" > "$work/files.json"; then
+            listed=$(jq '[.[][]] | length' "$work/files.json")
+          else
+            echo '[]' > "$work/files.json"
+            listed=-1
+          fi
+          if [ "$listed" != "$changed_files" ] || [ "$changed_files" -gt 3000 ]; then
+            flags+=(--incomplete)
+          fi
+
+          # 3. 判定（exit 0 通過、30 未通過；其他是守門本身出錯，讓這一步失敗）
+          set +e
+          node tests/ci/protected-paths.mjs --files="$work/files.json" --body="$work/body.txt" --head-ref="$head_ref" "${flags[@]}" > "$work/result.json"
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ] && [ "$code" -ne 30 ]; then
+            echo "判定腳本異常結束（exit ${code}）" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          jq -r '.message' "$work/result.json" > "$work/message.md"
+          echo "ok=$(jq -r '.ok' "$work/result.json")" >> "$GITHUB_OUTPUT"
+          cat "$work/message.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 留言（同一則反覆更新）
+        if: ${{ steps.guard.outputs.stale == 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EVENT_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          work="${RUNNER_TEMP}/protected-paths"
+          marker='<!-- mysitestorage-protected-paths -->'
+          {
+            printf '%s\n' "$marker"
+            cat "$work/message.md"
+            printf '\n\n判定對象：提交 `%s`（每次推送或修改 PR 說明都會重新判定並更新這則留言）\n' "${EVENT_HEAD_SHA:0:7}"
+          } > "$work/comment.md"
+          jq -Rs '{body: .}' "$work/comment.md" > "$work/payload.json"
+          # 只更新守門自己（github-actions[bot]）留的那一則
+          existing=$(gh api --paginate "repos/${REPO}/issues/${PR_NUMBER}/comments?per_page=100" \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"${marker}\"))) | .id" | head -n 1)
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/${REPO}/issues/comments/${existing}" --input "$work/payload.json" > /dev/null
+          else
+            gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" --input "$work/payload.json" > /dev/null
+          fi
+
+      - name: 結果
+        env:
+          OK: ${{ steps.guard.outputs.ok }}
+        run: |
+          if [ "$OK" != "true" ]; then
+            echo "::error::受保護路徑守門未通過，原因與處理方式見 PR 留言或本頁摘要。"
+            exit 1
+          fi
+          echo "受保護路徑守門：通過"

@@ -1,0 +1,66 @@
+{
+    "data": {
+        "type": "post",
+        "slug": "sample-article-taxonomy",
+        "path": "/articles/sample-article-taxonomy",
+        "title": "示例內容：分類與標籤展示",
+        "excerpt": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 這篇示例文章同時屬於多個標籤，用來測試分類與標籤彙整頁。",
+        "published_at": "2026-10-31T02:00:00Z",
+        "modified_at": "2026-10-31T02:00:00Z",
+        "author_name": "示例編輯",
+        "cover": {
+            "url": "/mock-media/mock-cover.png",
+            "alt": "示例封面五：紫色背景與幾何圖形",
+            "width": 1200,
+            "height": 630
+        },
+        "categories": [
+            {
+                "slug": "sample-media",
+                "name": "影音（示例）",
+                "path": "/categories/sample-media",
+                "count": null
+            },
+            {
+                "slug": "sample-notes",
+                "name": "隨筆（示例）",
+                "path": "/categories/sample-notes",
+                "count": null
+            }
+        ],
+        "tags": [
+            {
+                "slug": "sample-video",
+                "name": "影片",
+                "path": "/tags/sample-video",
+                "count": null
+            },
+            {
+                "slug": "sample",
+                "name": "示例",
+                "path": "/tags/sample",
+                "count": null
+            },
+            {
+                "slug": "sample-audio",
+                "name": "音訊",
+                "path": "/tags/sample-audio",
+                "count": null
+            }
+        ],
+        "duration_seconds": null,
+        "is_sample": true,
+        "content_html": "<p>MSMOCK-7F3A9C1E</p><p class=\"wp-block-paragraph\">本文為系統產生的<strong>示例內容</strong>，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。</p>\n\n\n\n<p class=\"wp-block-paragraph\">這篇示例文章同時屬於多個標籤，用來測試分類與標籤彙整頁。</p>",
+        "video": null,
+        "podcast": null
+    },
+    "seo": {
+        "title": "示例內容：分類與標籤展示",
+        "description": "MSMOCK-7F3A9C1E 本文為系統產生的示例內容，只用於版面與功能測試，不代表網站作者的觀點、經歷或任何承諾。 這篇示例文章同時屬於多個標籤，用來測試分類與標籤彙整頁。",
+        "canonical_path": "/articles/sample-article-taxonomy",
+        "noindex": false,
+        "og_type": "article",
+        "og_image": "/mock-media/mock-cover.png",
+        "og_image_alt": "示例封面五：紫色背景與幾何圖形"
+    }
+}
