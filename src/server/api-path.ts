@@ -157,3 +157,4 @@ export function requestKey(request: ApiRequest): string {
   const url = apiUrl('http://mock.invalid', request.path, request.query);
   return `${url.pathname}${url.search}`;
 }
+// FE-11 測試：新提交多改一個受保護檔（不合併）
