@@ -10,19 +10,24 @@ import { SiteLayout } from '@/components/SiteLayout';
 import type { PageProps } from '@/lib/page-props';
 import '@/styles/globals.css';
 
-export default function App({ Component, pageProps }: AppProps<PageProps<Record<string, unknown>>>) {
+export default function App({ Component, pageProps, router }: AppProps<PageProps<Record<string, unknown>>>) {
   const { shell, head, view, error } = pageProps;
   const content = error !== undefined ? <ErrorView error={error} /> : <Component {...view} />;
+  // 每換一頁（不含 # 之後）就整棵版面重新掛載，比照 Blade 每次整頁載入：
+  // 同一頁型之間換頁時，播放器、圖片失效狀態、手機選單等元件狀態不會帶到下一頁。
+  const pageKey = router.asPath.split('#')[0];
   return (
     <>
       <PageHead head={head} />
       <SkipLink />
       {shell.site !== null ? (
-        <SiteLayout site={shell.site} currentPath={shell.currentPath}>
+        <SiteLayout key={pageKey} site={shell.site} currentPath={shell.currentPath}>
           {content}
         </SiteLayout>
       ) : (
-        <StaticShell siteName={shell.siteName}>{content}</StaticShell>
+        <StaticShell key={pageKey} siteName={shell.siteName}>
+          {content}
+        </StaticShell>
       )}
       <DataSourceNotice source={shell.dataSource} />
     </>

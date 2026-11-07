@@ -26,14 +26,17 @@
 - 每行以 `- ` 開頭，後面是從儲存庫根目錄起算的路徑，不加引號或反引號。
 - 沒改到受保護路徑時不需要這個區塊（有也必須是空的）。
 - 開放區只有：`src/views/**`、`src/components/**`（`src/components/safe/**` 除外）、`src/styles/**`、`public/design/**`。其他一律受保護。
-- 守門工作流程（`pull_request_target`）要等委託人在本儲存庫建立事件政策後才加入（BLK-REACT-POLICY-01）；在那之前由主 CI 與委託人核對。
+- 守門工作流程 `.github/workflows/protected-paths.yml`（工作名稱 `protected-paths`，判定邏輯 `tests/ci/protected-paths.mjs`）以 `pull_request_target` 觸發，
+  只取 main 上的判定腳本、不取 PR 的內容、不用秘密；PR 欄位一律在執行時讀成檔案或變數，不在 `run:` 裡展開 `${{ }}`。
+  委託人在本儲存庫建立事件政策之前不會觸發（BLK-REACT-POLICY-01），在那之前由主 CI 的模擬（`tests/ci/guard-workflow-sim.mjs`）與委託人核對。
+  改了守門工作流程或判定腳本，要同步更新模擬與單元測試。
 
 ## 指令與環境
 - Node.js 26 線、npm 11.20.0（Node.js 26.13.0 內附）。鎖定檔只在 Linux 產生。
 - `.npmrc` 有 `save=false`：一般的 `npm install` 不會改寫 `package.json` 與鎖定檔。新增或升級套件一律明寫
   `npm install <套件>@<確切版本> --save`（開發用加 `--save-dev`），版本先查 npm registry 與官方公告，寫進 PR 說明。
 - 驗證順序（CI 相同）：`npm ci` → `npm run check:static` → `npm run lint` → `npm run typecheck` → `npm test`
-  → `npm run build` → `npm run check:build` → `node tests/ci/dev-check.mjs` → `npm run test:e2e`。
+  → `node tests/ci/guard-workflow-sim.mjs` → `npm run build` → `npm run check:build` → `node tests/ci/dev-check.mjs` → `npm run test:e2e`。
 - 零啟動自改寫封條（FE-19）：改了相依套件、`next.config.mjs` 或 `tsconfig.json` 之後，先跑一次 `npm run build` 與 `node tests/ci/dev-check.mjs`；
   Next.js 若補寫了 `tsconfig.json`，把結果提交定型。`next-env.d.ts` 在 `.gitignore`，不提交。
 - `next.config.mjs` 的 `agentRules: false` 不可移除：Next.js 16.4 的 `next dev` 偵測到 AI 代理時會自動改寫 `AGENTS.md`。

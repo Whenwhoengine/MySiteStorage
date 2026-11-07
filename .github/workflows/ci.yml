@@ -1,7 +1,8 @@
 # MySiteStorage 主 CI（mysite docs/MySiteReact前端專案v1.md §6.8；定案執行書 §5 M-07、M-11、M-14、M-16）。
 # 觸發：對 main 的 PR 與 main 本身的推送（不對設計分支的推送另跑，避免同一提交出現兩份同名檢查）。
 # 所有外部 Action 以完整 SHA 固定（版本與來源見 mysite docs/版本查核.md）；權限預設唯讀。
-# 受保護路徑守門（pull_request_target）另立工作流程，等委託人建立 Actions 事件政策後才加入（BLK-REACT-POLICY-01）。
+# 受保護路徑守門（pull_request_target）另立 protected-paths.yml；委託人建立 Actions 事件政策（BLK-REACT-POLICY-01）後才會實際觸發。
+# 本檔只以假的 GitHub API 模擬守門工作流程的 shell 步驟（tests/ci/guard-workflow-sim.mjs）。
 name: ci
 
 on:
@@ -73,6 +74,11 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npm test
 
+      - name: 守門工作流程模擬（假的 GitHub API；FE-11 的工作流程層）
+        id: guard_sim
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: node tests/ci/guard-workflow-sim.mjs
+
       - name: 正式建置（FE-02）
         id: build
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
@@ -129,6 +135,7 @@ jobs:
           R_TYPECHECK: ${{ steps.typecheck.outcome }}
           R_CONTRACT: ${{ steps.contract_types.outcome }}
           R_UNIT: ${{ steps.unit.outcome }}
+          R_GUARD_SIM: ${{ steps.guard_sim.outcome }}
           R_BUILD: ${{ steps.build.outcome }}
           R_BUILD_CHECKS: ${{ steps.build_checks.outcome }}
           R_DEV: ${{ steps.dev_check.outcome }}
@@ -158,6 +165,7 @@ jobs:
             row "型別檢查" "$R_TYPECHECK" "改動弄壞了程式或 props：把錯誤貼回 MyDyad，或交施工者"
             row "契約型別" "$R_CONTRACT" "契約副本改了但型別沒更新：交施工者"
             row "單元測試" "$R_UNIT" "資料層或格式規則被改動：交施工者"
+            row "守門工作流程模擬" "$R_GUARD_SIM" "守門工作流程或判定腳本被改動：交施工者"
             row "正式建置" "$R_BUILD" "建置失敗（常見：檔名大小寫）：交施工者"
             row "建置產物檢查" "$R_BUILD_CHECKS" "正式產物混進假資料、元件標記或開發提示：交施工者"
             row "開發模式實測" "$R_DEV" "next dev 改寫了檔案、標記器失效或綁到非本機位址：交施工者"
@@ -194,7 +202,8 @@ jobs:
 
           每一項的可能原因與處理方式，在[這次執行的工作摘要](${RUN_URL})；三種寬度的截圖在同一頁下方的產物。
           看不懂或需要改受保護的檔案時，把這個 PR 的網址交給本機 Claude Code 或施工者。"
-          existing=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" --paginate --jq ".[] | select(.body | startswith(\"${marker}\")) | .id" | head -n 1)
+          # 只更新自己（github-actions[bot]）留的那一則，不碰別人帶同樣標記的留言
+          existing=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments?per_page=100" --paginate --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | startswith(\"${marker}\"))) | .id" | head -n 1)
           if [ -n "$existing" ]; then
             gh api -X PATCH "repos/${REPO}/issues/comments/${existing}" -f body="$body" > /dev/null
           else

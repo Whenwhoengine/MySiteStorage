@@ -67,7 +67,7 @@ mysite 儲存庫 `docs/` 內三份文件，衝突時依序為準：
 |---|---|
 | `MYSITE_DATA_MODE` | 未設或 `mock`：讀 `mocks/` 示例資料（MyDyad 預覽、前端 CI）。`api`：呼叫 Laravel 公開 API |
 | `MYSITE_API_ORIGIN` | `api` 模式必填：API 的來源（只能是協定＋主機＋埠） |
-| `MYSITE_API_TIMEOUT_MS` | `api` 模式必填：每次呼叫 API 的逾時（毫秒）。**數值待委託人依 D13c 裁定**，程式不給預設值 |
+| `MYSITE_API_TIMEOUT_MS` | `api` 模式必填：每次呼叫 API 的逾時（毫秒）。正式值 `50000`（D13c 已定值，算式見 mysite `docs/MySiteReact施工紀錄/D13c逾時試算.md` 第 9 節），由部署設定傳入；程式不給預設值 |
 | `MYSITE_PUBLIC_ORIGIN` | 主站公開網址，組 canonical 與 `og:url`；`api` 模式必填 |
 | `MYSITE_SITE_NAME` | 網站資訊取不到時的內建站名（預設 `mysite`） |
 | `DEPLOY_ENVIRONMENT` | `staging`／`production` 時必須是 `api` 模式，否則啟動即失敗 |
@@ -85,6 +85,7 @@ mysite 儲存庫 `docs/` 內三份文件，衝突時依序為準：
 | `npm run check:static` | 禁用功能、`SafeHtml` 唯一、`AGENTS.md` 一致、契約副本雜湊 |
 | `npm run check:build` | 建置後：全部動態渲染、無假資料哨兵、無 `data-dyad-*` |
 | `node tests/ci/dev-check.mjs` | 建置後：元件標記器、只綁本機、零啟動自改寫（FE-19） |
+| `node tests/ci/guard-workflow-sim.mjs` | 以假的 GitHub API 模擬受保護路徑守門工作流程（需要 bash 與 jq） |
 | `npm run test:e2e` | 瀏覽器測試（三種寬度、無障礙、掛鉤、錯誤頁；需先建置） |
 
 ## 版本（2026-11-06 查 npm registry）
@@ -98,3 +99,4 @@ Node.js：CI 與正式用 26 線（`.nvmrc`，與 mysite `NODE_VERSION` 同主�
 - `main`：受保護，只能經 PR 以合併提交合併；管理員也不得繞過。
 - `design/work`：委託人用 MyDyad 設計的長期分支，合併後不要刪除。
 - 施工者分支（`claude/…`）：改到受保護檔案時，PR 說明要有宣告區塊（格式見 `CLAUDE.md`）。
+- 受保護路徑守門（`.github/workflows/protected-paths.yml`，檢查名稱 `protected-paths`）：每個對 main 的 PR 開啟、推送、重新開啟、修改說明時都會判定，結果寫成 PR 上的檢查與一則反覆更新的留言。它用 `pull_request_target` 觸發，必須先在本儲存庫建立只允許這支檔案使用 `pull_request_target` 的 Actions 事件政策才會執行。

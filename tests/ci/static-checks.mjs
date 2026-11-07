@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkSafeHtmlSource } from './safe-html-checks.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const SKIP_DIRS = new Set(['node_modules', '.next', '.git', 'test-results', 'playwright-report', 'coverage', '.dyad', '.mydyad']);
@@ -28,8 +29,9 @@ const read = (file) => readFileSync(path.join(ROOT, file), 'utf8');
 const stripComments = (text) => text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1');
 const readCode = (file) => stripComments(read(file));
 // eslint.config.mjs 列出禁用名稱是為了禁止它們，不掃描
+// 涵蓋 .ts、.tsx、.mts、.cts、.js、.jsx、.mjs、.cjs（.mts／.cts 原本漏掉，可用來繞過檢查）
 const code = all.filter(
-  (f) => /\.(tsx?|jsx?|mjs|cjs)$/.test(f) && !f.startsWith('tests/') && !f.startsWith('mocks/') && !f.startsWith('contracts/') && f !== 'eslint.config.mjs',
+  (f) => /\.[cm]?[jt]sx?$/.test(f) && !f.startsWith('tests/') && !f.startsWith('mocks/') && !f.startsWith('contracts/') && f !== 'eslint.config.mjs',
 );
 const srcCode = code.filter((f) => f.startsWith('src/'));
 
@@ -78,6 +80,10 @@ for (const f of srcCode) {
     if (!attr || !/^[\w.]*\.contentHtml$/.test(attr[1].trim())) fail('FE-03', `${f}：<SafeHtml> 只能接 contentHtml（實際：${attr ? attr[1] : '無 html 屬性'}）`);
   }
 }
+// 語法樹檢查（上面的文字比對仍保留）：其他原始 HTML 輸出點（innerHTML、outerHTML、insertAdjacentHTML、document.write、
+// createContextualFragment、DOMParser、setHTMLUnsafe、srcDoc 等）、SafeHtml 改名／轉匯出／當成值、html 只接 contentHtml、
+// contentHtml 只由 src/server/** 產生。規則細節見 tests/ci/safe-html-checks.mjs。
+for (const f of srcCode) for (const problem of checkSafeHtmlSource(f, read(f))) fail('FE-03', problem);
 
 // ── 網路與儲存（AI_RULES 第 2、5 條；ESLint 之外再查一次） ──
 for (const f of srcCode) {
