@@ -110,3 +110,4 @@ export function serverConfig(): ServerConfig {
   cached ??= readConfig();
   return cached;
 }
+// FE-11 測試：施工者分支改受保護檔（不合併）
