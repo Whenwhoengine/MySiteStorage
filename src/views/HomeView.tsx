@@ -104,3 +104,4 @@ export default function HomeView({ siteName, site, featured, posts, videos, podc
     </>
   );
 }
+// FE-11 測試：設計分支只改開放區（不合併）
