@@ -7,6 +7,11 @@ export interface ShellProps {
   site: SiteInfo | null;
   /** 站名：網站資訊的站名，取不到時為內建站名。 */
   siteName: string;
+  /**
+   * 內建站名（伺服器的 MYSITE_SITE_NAME，未設為 mysite）。瀏覽器端自行畫出錯誤頁（_error）時沒有伺服器可問，
+   * 改讀第一次載入時伺服器放進頁面的這個值，與伺服器端錯誤頁的內建靜態頁首一致。
+   */
+  staticSiteName: string;
   /** 目前路徑（不含查詢字串），選單標示目前位置用。 */
   currentPath: string;
   /** 只在開發模式有值：目前資料來源（畫面左下角提示）。正式建置一律為 null。 */

@@ -3,19 +3,24 @@ import type { GetServerSideProps } from 'next';
 import type { ListableType, TaxonomyViewProps } from '@/lib/content/types';
 import type { PageProps } from '@/lib/page-props';
 import { COLLECTION_TITLE, LISTABLE_TYPES, TYPE_LABEL } from '@/lib/paths';
-import { isValidSlug, lastValue, parsePage, taxonomyRequest } from '../api-path';
+import { QUERY_ARRAY, isValidSlug, lastValue, matchesSlugRoute, parsePage, queryValue, taxonomyRequest } from '../api-path';
 import { toCard, toPageInfo } from '../mappers';
-import { loadPage, notFoundPage, requestContext } from '../page-data';
+import { invalidSlugPage, isReadMethod, loadPage, methodNotAllowedPage, notFoundPage, requestContext } from '../page-data';
 import { TaxonomyResponseSchema } from '../schemas';
 
 export function taxonomyProps(kind: 'category' | 'tag'): GetServerSideProps<PageProps<TaxonomyViewProps>> {
   return async (ctx) => {
     const rc = requestContext(ctx);
     const slug = lastValue(ctx.params?.slug);
-    const page = parsePage(ctx.query.page);
-    if (!isValidSlug(slug) || !page.ok) return notFoundPage(ctx, rc);
+    // Laravel 先比對路由：slug 不符路由規則時沒有對應路由（任何方法都是 404），符合時才檢查方法
+    if (matchesSlugRoute(slug) && !isReadMethod(ctx.req.method)) return methodNotAllowedPage(ctx, rc);
+    if (!isValidSlug(slug)) return invalidSlugPage(ctx, rc, slug);
+    const page = parsePage(queryValue(ctx.query, 'page'));
+    const typeValue = queryValue(ctx.query, 'type');
+    // type 是陣列（?type[]=post）時 Laravel 判為不認得的型別 → 404（ContentController::taxonomy）
+    if (!page.ok || typeValue === QUERY_ARRAY) return notFoundPage(ctx, rc);
     // type 照原樣交給 API 判斷（不認得的值 API 回 404）；空白視同未帶
-    const rawType = lastValue(ctx.query.type)?.trim() ?? '';
+    const rawType = typeValue?.trim() ?? '';
     const request = taxonomyRequest(kind, slug, rawType === '' ? null : rawType, page.page);
     return loadPage(ctx, rc, request, TaxonomyResponseSchema, (body) => {
       const data = body.data;

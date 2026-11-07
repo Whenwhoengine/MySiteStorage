@@ -38,6 +38,15 @@ describe('readConfig', () => {
     expect(() => readConfig({ ...API, MYSITE_PUBLIC_ORIGIN: '' })).toThrow(ConfigError);
   });
 
+  it('逾時上限是 JavaScript 計時器上限 2147483647（超過時 Node.js 會改成 1 毫秒）；仍不給預設值', () => {
+    expect(readConfig({ ...API, MYSITE_API_TIMEOUT_MS: '50000' }).timeoutMs).toBe(50000);
+    expect(readConfig({ ...API, MYSITE_API_TIMEOUT_MS: '2147483647' }).timeoutMs).toBe(2147483647);
+    expect(() => readConfig({ ...API, MYSITE_API_TIMEOUT_MS: '2147483648' })).toThrow(/不得超過 2147483647/);
+    expect(() => readConfig({ ...API, MYSITE_API_TIMEOUT_MS: '99999999999999999999' })).toThrow(/不得超過 2147483647/);
+    const { MYSITE_API_TIMEOUT_MS: _omit, ...withoutTimeout } = API;
+    expect(() => readConfig(withoutTimeout)).toThrow(ConfigError);
+  });
+
   it('API 與主站網址只能是來源（不含路徑、查詢字串、帳號密碼）', () => {
     expect(() => readConfig({ ...API, MYSITE_API_ORIGIN: 'http://api.test/api/v1' })).toThrow(ConfigError);
     expect(() => readConfig({ ...API, MYSITE_API_ORIGIN: 'http://u:p@api.test' })).toThrow(ConfigError);

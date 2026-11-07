@@ -63,20 +63,22 @@ describe('getJson 的分類', () => {
   it('404＋契約錯誤格式 → not_found', async () => {
     expect((await getJson(detailRequest('post', 'fe-404'), DetailResponseSchema, opts())).kind).toBe('not_found');
   });
+  // 503 且為契約錯誤格式時另帶 API 的錯誤碼（第三欄；錯誤頁據此顯示與 Blade 相同的說明）
   it.each([
-    ['fe-404-html', 'not_json'],
-    ['fe-503', 'status'],
-    ['fe-500', 'status'],
-    ['fe-429', 'status'],
-    ['fe-nonjson', 'not_json'],
-    ['fe-schema', 'schema'],
-    ['fe-extra', 'schema'],
-    ['fe-timeout', 'timeout'],
-    ['fe-redirect', 'redirect'],
-    ['fe-reset', 'transport'],
-  ])('%s → unavailable（%s）', async (slug, reason) => {
+    ['fe-404-html', 'not_json', undefined],
+    ['fe-503', 'status', 'CONTENT_UPSTREAM_UNAVAILABLE'],
+    ['fe-503-model', 'status', 'CONTENT_MODEL_UNSUPPORTED'],
+    ['fe-500', 'status', undefined],
+    ['fe-429', 'status', undefined],
+    ['fe-nonjson', 'not_json', undefined],
+    ['fe-schema', 'schema', undefined],
+    ['fe-extra', 'schema', undefined],
+    ['fe-timeout', 'timeout', undefined],
+    ['fe-redirect', 'redirect', undefined],
+    ['fe-reset', 'transport', undefined],
+  ])('%s → unavailable（%s）', async (slug, reason, code) => {
     const r = await getJson(detailRequest('post', slug), DetailResponseSchema, opts());
-    expect(r).toEqual({ kind: 'unavailable', reason });
+    expect(r).toEqual(code === undefined ? { kind: 'unavailable', reason } : { kind: 'unavailable', reason, code });
   });
   it('連線被拒 → unavailable', async () => {
     const closed = await startFakeApi();
@@ -139,7 +141,17 @@ describe('並行取資料的結果對照（§4.9）', () => {
     const { props, status } = await page('fe-503');
     expect(status).toBe(503);
     expect(props.error).toMatchObject({ status: 503, requestId: OK_RID, retryPath: '/articles/x?a=1' });
+    expect(props.error?.message).toBe('內容暫時無法讀取，請稍後再試。');
     expect(props.shell.site).not.toBeNull();
+  });
+  it('內容 503 CONTENT_MODEL_UNSUPPORTED → 說明與 Blade 相同（ErrorCode::publicMessage）', async () => {
+    const { props, status } = await page('fe-503-model');
+    expect(status).toBe(503);
+    expect(props.error).toMatchObject({ status: 503, message: '內容暫時無法顯示，請稍後再試。', requestId: OK_RID });
+  });
+  it('內容 404 的說明是「找不到這個內容。」（CONTENT_NOT_FOUND）', async () => {
+    const { props } = await page('fe-404');
+    expect(props.error?.message).toBe('找不到這個內容。');
   });
   it.each(['fe-nonjson', 'fe-schema', 'fe-extra', 'fe-timeout', 'fe-redirect', 'fe-reset', 'fe-500', 'fe-404-html'])(
     '傳輸層或格式問題（%s）→ 503',

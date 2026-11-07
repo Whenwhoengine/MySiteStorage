@@ -13,5 +13,6 @@ export const catchAllProps: GetServerSideProps<PageProps<never>> = async (ctx) =
   const segments = ctx.params?.path;
   const depth = Array.isArray(segments) ? segments.length : 1;
   if (depth > MAX_PUBLIC_DEPTH) return errorProps(ctx, rc, 404, null, ERROR_MESSAGES.pageNotFound);
-  return notFoundPage(ctx, rc);
+  // 沒有對應路由：Laravel 不論方法一律 404「找不到這個頁面。」（ErrorRenderer）
+  return notFoundPage(ctx, rc, ERROR_MESSAGES.pageNotFound);
 };

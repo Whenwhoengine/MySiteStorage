@@ -1,7 +1,7 @@
 // 受保護（tests/**）：測試用的假 Laravel 公開 API（v1 FE-05：以假伺服器模擬連線被拒、逾時、非 JSON、格式不符）。
 // 一般請求照 mocks/manifest.json 的 api_path 回假資料；下列 slug 模擬各種失敗：
-//   fe-404（契約錯誤格式 404）、fe-404-html（非 JSON 的 404）、fe-503、fe-500、fe-429、fe-nonjson、fe-schema（缺欄位）、
-//   fe-extra（多欄位）、fe-timeout（不回應）、fe-redirect（302）、fe-reset（直接斷線）
+//   fe-404（契約錯誤格式 404）、fe-404-html（非 JSON 的 404）、fe-503、fe-503-model（CONTENT_MODEL_UNSUPPORTED）、
+//   fe-500、fe-429、fe-nonjson、fe-schema（缺欄位）、fe-extra（多欄位）、fe-timeout（不回應）、fe-redirect（302）、fe-reset（直接斷線）
 // /api/v1/site 的行為由請求編號（X-Request-Id）前 4 碼決定，讓平行的測試互不干擾：
 //   dead → 503；beef → 非 JSON；cafe → 不回應；其他 → 正常
 // GET /__log?rid=<請求編號> 回傳這個編號打過的 API 路徑（檢查「不呼叫任何 API」）。
@@ -77,6 +77,8 @@ export function startFakeApi({ port = 0, mocksDir = path.join(ROOT, 'mocks') } =
         return;
       case 'fe-503':
         return apiError(res, 503, 'CONTENT_UPSTREAM_UNAVAILABLE', '內容暫時無法讀取，請稍後再試。', rid);
+      case 'fe-503-model':
+        return apiError(res, 503, 'CONTENT_MODEL_UNSUPPORTED', '內容暫時無法顯示，請稍後再試。', rid);
       case 'fe-500':
         return apiError(res, 500, 'HTTP_500', '系統發生錯誤，請稍後再試。', rid);
       case 'fe-429':

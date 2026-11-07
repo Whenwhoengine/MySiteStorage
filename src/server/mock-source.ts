@@ -129,7 +129,7 @@ async function mockSearch(request: ApiRequest, requestId: string, sentinel: stri
     og_image_alt: null,
   });
   if (q === '') {
-    if (page > 1) return notFound(requestId);
+    // 沒有字詞時不搜尋，page 只驗格式（呼叫端已驗）不看範圍：真 API 同樣回 200（PublicContentController::search）
     return { status: 200, json: { data: { q: '', type, searched: false, items: [] }, meta: null, seo: seo('搜尋') } };
   }
   const needle = q.toLowerCase();

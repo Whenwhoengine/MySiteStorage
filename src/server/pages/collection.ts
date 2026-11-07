@@ -3,15 +3,16 @@ import type { GetServerSideProps } from 'next';
 import type { CollectionViewProps, ListableType } from '@/lib/content/types';
 import type { PageProps } from '@/lib/page-props';
 import { collectionPath } from '@/lib/paths';
-import { listRequest, parsePage } from '../api-path';
+import { listRequest, parsePage, queryValue } from '../api-path';
 import { toCard, toCollection, toPageInfo } from '../mappers';
-import { loadPage, notFoundPage, requestContext } from '../page-data';
+import { isReadMethod, loadPage, methodNotAllowedPage, notFoundPage, requestContext } from '../page-data';
 import { ListResponseSchema } from '../schemas';
 
 export function collectionProps(type: ListableType): GetServerSideProps<PageProps<CollectionViewProps>> {
   return async (ctx) => {
     const rc = requestContext(ctx);
-    const page = parsePage(ctx.query.page);
+    if (!isReadMethod(ctx.req.method)) return methodNotAllowedPage(ctx, rc);
+    const page = parsePage(queryValue(ctx.query, 'page'));
     if (!page.ok) return notFoundPage(ctx, rc);
     return loadPage(ctx, rc, listRequest(type, page.page), ListResponseSchema, (body) => ({
       view: {

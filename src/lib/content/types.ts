@@ -186,14 +186,14 @@ export interface SearchViewProps {
   result: { items: CardItem[]; pagination: PageInfo } | null;
 }
 
-/** 錯誤畫面需要的資訊（404／503／500）。 */
+/** 錯誤畫面需要的資訊（404／405／503／500）。 */
 export interface ErrorInfo {
-  /** 400 只出現在網址本身無法解析時（例如百分比編碼殘缺），由 Next.js 判定。 */
-  status: 400 | 404 | 500 | 503;
+  /** 400 只出現在網址本身無法解析時（例如百分比編碼殘缺），由 Next.js 判定；405 為 GET、HEAD 以外的方法。 */
+  status: 400 | 404 | 405 | 500 | 503;
   /** 固定的正體中文說明（比照 Laravel ErrorCode／ErrorRenderer 的訊息）。 */
   message: string;
-  /** 請求編號（32 碼十六進位）。 */
-  requestId: string;
+  /** 請求編號（32 碼十六進位）；瀏覽器端自行畫出的錯誤頁沒有對應的伺服器請求，為 null（不顯示編號）。 */
+  requestId: string | null;
   /** 「重新整理」連結要回到的站內路徑（含查詢字串），只在 503 使用。 */
   retryPath: string | null;
 }

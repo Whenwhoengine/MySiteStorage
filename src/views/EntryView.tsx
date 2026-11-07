@@ -12,7 +12,7 @@ import { TypeChip } from '@/components/TypeChip';
 import type { EntryViewProps, TermLink } from '@/lib/content/types';
 import { formatTaipeiDate, isMeaningfullyUpdated } from '@/lib/format';
 import { COLLECTION_TITLE, collectionPath } from '@/lib/paths';
-import { limitChars } from '@/lib/text';
+import { isEmptyHtml, limitChars } from '@/lib/text';
 
 const measure = 'mx-auto max-w-measure';
 
@@ -98,7 +98,7 @@ export default function EntryView({ item }: EntryViewProps) {
         ) : null}
 
         <div className={measure} data-entry-body="">
-          {item.contentHtml.trim() !== '' ? <SafeHtml html={item.contentHtml} /> : <EmptyLine>這個內容目前沒有內文。</EmptyLine>}
+          {!isEmptyHtml(item.contentHtml) ? <SafeHtml html={item.contentHtml} /> : <EmptyLine>這個內容目前沒有內文。</EmptyLine>}
         </div>
 
         {item.categories.length > 0 || item.tags.length > 0 ? (

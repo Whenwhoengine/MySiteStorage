@@ -1,6 +1,7 @@
-// 受保護：404、503、500 錯誤畫面（v1 §6.4；FE-17；掛鉤 error_view.*）。比照 Blade errors/mysite.blade.php。
-// - 標題：404「找不到這個頁面」、503「內容暫時無法讀取」、500「系統發生錯誤」。
+// 受保護：404、405、503、500 錯誤畫面（v1 §6.4；FE-17；掛鉤 error_view.*）。比照 Blade errors/mysite.blade.php。
+// - 標題：404「找不到這個頁面」、405「無法完成請求」、503「內容暫時無法讀取」、500「系統發生錯誤」。
 // - 一律有名稱完全等於「回首頁」的連結與「請求編號：…」；503 另有「重新整理」。
+//   例外：瀏覽器端自行畫出的錯誤頁（_error 在瀏覽器執行）沒有伺服器請求，requestId 為 null，不顯示編號（不捏造）。
 // - 404 頁內保留原生搜尋表單（#state-q）。
 // 版面（完整版面或內建靜態頁首頁尾）由 _app 決定；外觀見 src/components/safe-styles.ts。
 import type { ErrorInfo } from '@/lib/content/types';
@@ -52,9 +53,11 @@ export function ErrorView({ error }: { error: ErrorInfo }) {
           </a>
         ) : null}
       </p>
-      <p className={c.ref} data-request-id="">
-        請求編號：<code>{error.requestId}</code>
-      </p>
+      {error.requestId !== null ? (
+        <p className={c.ref} data-request-id="">
+          請求編號：<code>{error.requestId}</code>
+        </p>
+      ) : null}
     </section>
   );
 }

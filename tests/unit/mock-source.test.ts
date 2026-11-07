@@ -61,4 +61,15 @@ describe('mockResponse', () => {
     const long = await mockResponse(searchRequest('字'.repeat(101), null, null), RID);
     expect(long.status).toBe(422);
   });
+
+  it('搜尋：沒有字詞但帶 page → 200、不搜尋（與真 API／Blade 相同，不是 404）', async () => {
+    for (const page of [2, 1000]) {
+      const r = await mockResponse(searchRequest(null, null, page), RID);
+      expect(r.status).toBe(200);
+      const parsed = SearchResponseSchema.parse(r.json);
+      expect(parsed.data).toMatchObject({ q: '', searched: false, items: [] });
+      expect(parsed.meta).toBeNull();
+      expect(parsed.seo.title).toBe('搜尋');
+    }
+  });
 });

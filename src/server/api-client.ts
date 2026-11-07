@@ -4,6 +4,7 @@
 //   404 且為契約錯誤格式 → not_found（畫 404 錯誤頁）
 //   422 且為契約錯誤格式（只有搜尋）→ invalid（搜尋頁的錯誤分支）
 //   其餘一律 unavailable（503）：連線被拒、逾時、轉址、非 JSON、格式不符、5xx、其他狀態碼
+//   （503 且為契約錯誤格式時另帶錯誤碼 code，錯誤頁據此顯示與 Blade 相同的說明，例如 CONTENT_MODEL_UNSUPPORTED）
 // 每次請求都呼叫，不快取；轉送同一個 X-Request-Id。
 import type { z } from 'zod';
 import { apiUrl, type ApiRequest } from './api-path';
@@ -15,7 +16,7 @@ export type FetchResult<T> =
   | { kind: 'ok'; data: T }
   | { kind: 'not_found'; requestId: string | null }
   | { kind: 'invalid'; message: string; requestId: string | null }
-  | { kind: 'unavailable'; reason: UnavailableReason };
+  | { kind: 'unavailable'; reason: UnavailableReason; code?: string };
 
 export type UnavailableReason =
   | 'transport'
@@ -50,6 +51,10 @@ function classify<T>(raw: RawResponse, schema: z.ZodType<T>, allowInvalid: boole
     if (!parsed.success) return { kind: 'unavailable', reason: 'schema' };
     if (raw.status === 404) return { kind: 'not_found', requestId: parsed.data.request_id };
     return { kind: 'invalid', message: parsed.data.message, requestId: parsed.data.request_id };
+  }
+  if (raw.status === 503) {
+    const parsed = ErrorSchema.safeParse(raw.json);
+    if (parsed.success) return { kind: 'unavailable', reason: 'status', code: parsed.data.error };
   }
   return { kind: 'unavailable', reason: 'status' };
 }

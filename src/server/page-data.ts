@@ -6,15 +6,16 @@
 //    內容 404／503＋site 成功 → 錯誤頁，完整版面，附請求編號
 //    內容 404／503＋site 失敗 → 錯誤頁，內建靜態頁首頁尾，附請求編號
 //    傳輸失敗、逾時、非 JSON、格式不符 → 503
-// 3. 404、503 由頁面自己設 res.statusCode（不用 notFound: true，v1 §4.3 第 4 步）。
+// 3. 404、405、503 由頁面自己設 res.statusCode（不用 notFound: true，v1 §4.3 第 4 步）。
+// 4. 公開頁只接受 GET（HEAD 由 Next.js 隨 GET 處理、不送內文）；其他方法回 405（比照 Laravel 路由＋ErrorRenderer）。
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import type { z } from 'zod';
 import type { SiteInfo } from '@/lib/content/types';
-import { ERROR_MESSAGES, errorHead, fullTitle } from '@/lib/errors';
+import { ERROR_MESSAGES, errorHead, fullTitle, unavailableMessage } from '@/lib/errors';
 import type { HeadProps, PageProps, ShellProps } from '@/lib/page-props';
 export { ERROR_HEADINGS, ERROR_MESSAGES, errorHead, fullTitle } from '@/lib/errors';
 import { getJson, type FetchResult } from './api-client';
-import { siteRequest, type ApiRequest } from './api-path';
+import { matchesSlugRoute, siteRequest, type ApiRequest } from './api-path';
 import { serverConfig, type ServerConfig } from './config';
 import { toSiteInfo } from './mappers';
 import { requestIdFrom } from './request-id';
@@ -47,18 +48,45 @@ export function shellProps(rc: RequestContext, site: SiteInfo | null): ShellProp
   return {
     site,
     siteName: site?.name ?? rc.config.siteName,
+    staticSiteName: rc.config.siteName,
     currentPath: rc.currentPath,
     dataSource: process.env.NODE_ENV === 'development' ? rc.config.mode : null,
   };
 }
 
-function absoluteUrl(origin: string, pathOrUrl: string): string {
-  return pathOrUrl.startsWith('/') && !pathOrUrl.startsWith('//') ? `${origin}${pathOrUrl}` : pathOrUrl;
+/**
+ * canonical 與 og:url：一律「主站公開網址＋路徑」，比照 PageMeta::canonicalUrl（rtrim(APP_URL, '/') . $path）。
+ * 不論路徑長怎樣（包括 // 或 /\ 開頭）都接在主站網址之後，結果必定同源，不會變成指向其他主機的網址。
+ * 契約保證 canonical_path 以 / 開頭；不是時不輸出 canonical。
+ */
+export function canonicalUrl(origin: string, canonicalPath: string): string | null {
+  return canonicalPath.startsWith('/') ? `${origin}${canonicalPath}` : null;
+}
+
+/**
+ * og:image：只收兩種，其餘不輸出——
+ * 1. 單一 / 開頭的站內路徑（假資料的 /mock-media/…），接在主站網址之後；
+ * 2. https 絕對網址（主機非空、不含帳號密碼），對應媒體政策 Sanitizer::isAllowedMediaUrl 的 https 分支
+ *    （正式環境 WP_PUBLIC_URL 必須是 https，所以正式環境通過政策的圖片都屬此類）。
+ * 與該政策相同，含控制字元、空白或反斜線的一律不收；// 開頭（協定相對、會指向其他主機）不收。
+ */
+export function ogImageUrl(origin: string, raw: string): string | null {
+  // eslint-disable-next-line no-control-regex -- 刻意比對控制字元（同 Sanitizer::isAllowedMediaUrl 的 [\x00-\x20\\]）
+  if (raw === '' || /[\u0000- \\]/.test(raw)) return null;
+  if (raw.startsWith('/')) return raw.startsWith('//') ? null : `${origin}${raw}`;
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return null;
+  }
+  if (url.protocol !== 'https:' || url.hostname === '' || url.username !== '' || url.password !== '') return null;
+  return raw;
 }
 
 export function headFromSeo(seo: ApiSeo, siteName: string, config: ServerConfig): HeadProps {
-  const canonical = absoluteUrl(config.publicOrigin, seo.canonical_path);
-  const image = seo.og_image === null ? null : absoluteUrl(config.publicOrigin, seo.og_image);
+  const canonical = canonicalUrl(config.publicOrigin, seo.canonical_path);
+  const image = seo.og_image === null ? null : ogImageUrl(config.publicOrigin, seo.og_image);
   return {
     title: fullTitle(seo.title, siteName),
     description: seo.description === '' ? null : seo.description,
@@ -75,13 +103,17 @@ export function headFromSeo(seo: ApiSeo, siteName: string, config: ServerConfig)
   };
 }
 
-/** 錯誤頁的 props（404／503；500 由 _error 產生）。 */
+/** 錯誤頁的 props（404／405／503；500 由 _error 產生）。 */
 export function errorProps<V>(
   ctx: Pick<GetServerSidePropsContext, 'res'>,
   rc: RequestContext,
-  status: 404 | 503,
+  status: 404 | 405 | 503,
   site: SiteInfo | null,
-  message: string = status === 404 ? ERROR_MESSAGES.contentNotFound : ERROR_MESSAGES.unavailable,
+  message: string = status === 404
+    ? ERROR_MESSAGES.contentNotFound
+    : status === 405
+      ? ERROR_MESSAGES.methodNotAllowed
+      : ERROR_MESSAGES.unavailable,
 ): GetServerSidePropsResult<PageProps<V>> {
   ctx.res.statusCode = status;
   const shell = shellProps(rc, site);
@@ -132,13 +164,54 @@ export async function loadPage<T, V>(
 ): Promise<GetServerSidePropsResult<PageProps<V>>> {
   const { site, content } = await loadWithSite(rc, request, schema);
   if (content.kind === 'not_found') return errorProps(ctx, rc, 404, site);
+  if (content.kind === 'unavailable') return errorProps(ctx, rc, 503, site, unavailableMessage(content.code));
   if (content.kind !== 'ok') return errorProps(ctx, rc, 503, site);
   const { view, seo } = build(content.data, site);
   const shell = shellProps(rc, site);
   return { props: { shell, head: headFromSeo(seo, shell.siteName, rc.config), view } };
 }
 
-/** 不合格的網址參數：不呼叫內容端點，只取網站資訊畫 404。 */
-export async function notFoundPage<V>(ctx: GetServerSidePropsContext, rc: RequestContext): Promise<GetServerSidePropsResult<PageProps<V>>> {
-  return errorProps(ctx, rc, 404, await loadSite(rc), ERROR_MESSAGES.pageNotFound);
+/**
+ * 不合格的網址參數：不呼叫內容端點，只取網站資訊畫 404。
+ * 說明預設為「找不到這個內容。」（page 不合格時 Laravel 丟 CONTENT_NOT_FOUND，PublicContentInput::page）；
+ * 沒有對應路由的情況（萬用路由、slug 不符路由規則）傳入 ERROR_MESSAGES.pageNotFound。
+ */
+export async function notFoundPage<V>(
+  ctx: GetServerSidePropsContext,
+  rc: RequestContext,
+  message: string = ERROR_MESSAGES.contentNotFound,
+): Promise<GetServerSidePropsResult<PageProps<V>>> {
+  return errorProps(ctx, rc, 404, await loadSite(rc), message);
+}
+
+/**
+ * slug 不合格的 404：不符合 Laravel 路由規則（超過 200 字等）時 Laravel 沒有對應路由 →「找不到這個頁面。」；
+ * 符合路由但不送出（. 、.. 、控制字元）時，Laravel 的內容端同樣回 CONTENT_NOT_FOUND →「找不到這個內容。」。
+ */
+export function invalidSlugPage<V>(
+  ctx: GetServerSidePropsContext,
+  rc: RequestContext,
+  slug: string | undefined,
+): Promise<GetServerSidePropsResult<PageProps<V>>> {
+  return notFoundPage(ctx, rc, matchesSlugRoute(slug) ? ERROR_MESSAGES.contentNotFound : ERROR_MESSAGES.pageNotFound);
+}
+
+/** 公開頁接受的方法：GET 與 HEAD（Laravel 的 Route::get 同時登記兩者）。未提供時視同 GET。 */
+export function isReadMethod(method: string | undefined): boolean {
+  const upper = (method ?? 'GET').toUpperCase();
+  return upper === 'GET' || upper === 'HEAD';
+}
+
+/**
+ * 其他方法：405「不支援這個操作。」，完整版面（只取網站資訊，不呼叫內容端點）。
+ * 比照 Blade：Laravel 路由丟 MethodNotAllowedHttpException → ErrorRenderer::respond，回應不帶 Allow 標頭
+ * （ErrorRenderer 不沿用例外的標頭）。OPTIONS 一併回 405：Blade 對 OPTIONS 回 200 空內文＋Allow: GET,HEAD
+ * （Laravel AbstractRouteCollection::getRouteForMethods），但要送空內文就得在 getServerSideProps 裡提前結束回應，
+ * 而 Next.js 16 的頁面處理之後仍會設定 Cache-Control 等標頭（開發模式無條件設定），會出錯，所以不這樣做。
+ */
+export async function methodNotAllowedPage<V>(
+  ctx: GetServerSidePropsContext,
+  rc: RequestContext,
+): Promise<GetServerSidePropsResult<PageProps<V>>> {
+  return errorProps(ctx, rc, 405, await loadSite(rc));
 }

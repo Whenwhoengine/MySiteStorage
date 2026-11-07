@@ -4,7 +4,9 @@
 // 環境變數（名稱由施工者定稿，刻意不沿用 Laravel 的 CONTENT_API_BASE_URL，v1 §6.3）：
 //   MYSITE_DATA_MODE        mock（預設，讀 mocks/）或 api（呼叫 Laravel 公開 API）
 //   MYSITE_API_ORIGIN       api 模式必填：Laravel 公開 API 的來源，例如 http://<內部別名>:<埠>（只能是來源，不含路徑）
-//   MYSITE_API_TIMEOUT_MS   api 模式必填：每次呼叫 API 的逾時（毫秒）。數值待委託人依 D13c 裁定，程式不給預設值
+//   MYSITE_API_TIMEOUT_MS   api 模式必填：每次呼叫 API 的逾時（毫秒），1～2147483647。程式不給預設值；
+//                           正式值已定為 50000（mysite docs/MySiteReact施工紀錄/D13c逾時試算.md 第 9 節），由部署設定提供。
+//                           上限 2147483647 是 JavaScript 計時器的上限（2^31−1）：超過時 Node.js 會改成 1 毫秒，每次呼叫都立刻逾時
 //   MYSITE_PUBLIC_ORIGIN    主站公開網址（組 canonical、og:url）；api 模式必填，mock 模式未設時用 http://localhost
 //   MYSITE_SITE_NAME        網站資訊取不到時的內建站名；未設時為 mysite（同 Laravel config mysite.site_name 預設）
 //   DEPLOY_ENVIRONMENT      mysite 既有的部署環境變數；staging／production 時必須是 api 模式，否則啟動失敗
@@ -28,6 +30,9 @@ export class ConfigError extends Error {
 }
 
 const GUARDED_ENVIRONMENTS = new Set(['staging', 'production']);
+
+/** setTimeout／AbortSignal.timeout 可用的最大毫秒數（2^31−1）。 */
+export const MAX_TIMEOUT_MS = 2147483647;
 
 function originOf(raw: string, name: string): string {
   let url: URL;
@@ -78,8 +83,12 @@ export function readConfig(env: Record<string, string | undefined> = process.env
   const rawApi = (env.MYSITE_API_ORIGIN ?? '').trim();
   if (rawApi === '') throw new ConfigError('api 模式必須設定 MYSITE_API_ORIGIN');
   const rawTimeout = (env.MYSITE_API_TIMEOUT_MS ?? '').trim();
-  if (!/^[1-9]\d*$/.test(rawTimeout) || !Number.isSafeInteger(Number(rawTimeout))) {
+  if (!/^[1-9]\d*$/.test(rawTimeout)) {
     throw new ConfigError('api 模式必須設定 MYSITE_API_TIMEOUT_MS（正整數毫秒；數值依 D13c 裁定）');
+  }
+  // 超過上限（含超出安全整數範圍的超長數字）一律拒絕
+  if (!Number.isSafeInteger(Number(rawTimeout)) || Number(rawTimeout) > MAX_TIMEOUT_MS) {
+    throw new ConfigError(`MYSITE_API_TIMEOUT_MS 不得超過 ${MAX_TIMEOUT_MS}（JavaScript 計時器上限；正式值依 D13c 為 50000）`);
   }
   const rawPublic = (env.MYSITE_PUBLIC_ORIGIN ?? '').trim();
   if (rawPublic === '') throw new ConfigError('api 模式必須設定 MYSITE_PUBLIC_ORIGIN');

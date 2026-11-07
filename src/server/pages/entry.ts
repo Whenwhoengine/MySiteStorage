@@ -2,16 +2,18 @@
 import type { GetServerSideProps } from 'next';
 import type { ContentType, EntryViewProps } from '@/lib/content/types';
 import type { PageProps } from '@/lib/page-props';
-import { detailRequest, isValidSlug, lastValue } from '../api-path';
+import { detailRequest, isValidSlug, lastValue, matchesSlugRoute } from '../api-path';
 import { toEntry } from '../mappers';
-import { loadPage, notFoundPage, requestContext } from '../page-data';
+import { invalidSlugPage, isReadMethod, loadPage, methodNotAllowedPage, requestContext } from '../page-data';
 import { DetailResponseSchema } from '../schemas';
 
 export function entryProps(type: ContentType): GetServerSideProps<PageProps<EntryViewProps>> {
   return async (ctx) => {
     const rc = requestContext(ctx);
     const slug = lastValue(ctx.params?.slug);
-    if (!isValidSlug(slug)) return notFoundPage(ctx, rc);
+    // Laravel 先比對路由：slug 不符路由規則時沒有對應路由（任何方法都是 404），符合時才檢查方法
+    if (matchesSlugRoute(slug) && !isReadMethod(ctx.req.method)) return methodNotAllowedPage(ctx, rc);
+    if (!isValidSlug(slug)) return invalidSlugPage(ctx, rc, slug);
     return loadPage(ctx, rc, detailRequest(type, slug), DetailResponseSchema, (body) => ({
       view: { item: toEntry(body.data) },
       seo: body.seo,

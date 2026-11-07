@@ -3,12 +3,22 @@
 // 查詢詞不合格時 API 回 422 SEARCH_INVALID，本頁同樣回 422 並畫錯誤分支（比照 Blade ContentController::search）。
 import type { GetServerSideProps } from 'next';
 import type { ContentType, SearchViewProps } from '@/lib/content/types';
+import { unavailableMessage } from '@/lib/errors';
 import type { PageProps } from '@/lib/page-props';
 import { COLLECTION_TITLE } from '@/lib/paths';
 import { normalizeQuery, strimWidth } from '@/lib/text';
-import { lastValue, parsePage, searchRequest } from '../api-path';
+import { parsePage, queryString, queryValue, searchRequest } from '../api-path';
 import { toCard, toPageInfo } from '../mappers';
-import { errorProps, headFromSeo, loadWithSite, notFoundPage, requestContext, shellProps } from '../page-data';
+import {
+  errorProps,
+  headFromSeo,
+  isReadMethod,
+  loadWithSite,
+  methodNotAllowedPage,
+  notFoundPage,
+  requestContext,
+  shellProps,
+} from '../page-data';
 import { SearchResponseSchema } from '../schemas';
 
 const TYPES: ContentType[] = ['post', 'page', 'video', 'podcast'];
@@ -24,11 +34,13 @@ function asType(value: string): ContentType | null {
 
 export const searchProps: GetServerSideProps<PageProps<SearchViewProps>> = async (ctx) => {
   const rc = requestContext(ctx);
-  const page = parsePage(ctx.query.page);
+  if (!isReadMethod(ctx.req.method)) return methodNotAllowedPage(ctx, rc);
+  const page = parsePage(queryValue(ctx.query, 'page'));
   if (!page.ok) return notFoundPage(ctx, rc);
 
-  const rawQ = lastValue(ctx.query.q);
-  const rawType = lastValue(ctx.query.type);
+  // q、type 是陣列時 Laravel 當成沒帶（PublicContentInput::search 的 is_string 判斷）
+  const rawQ = queryString(ctx.query, 'q');
+  const rawType = queryString(ctx.query, 'type');
   const typeValue = rawType?.trim() ?? '';
   const q = normalizeQuery(rawQ ?? '');
 
@@ -39,7 +51,7 @@ export const searchProps: GetServerSideProps<PageProps<SearchViewProps>> = async
     true,
   );
   if (content.kind === 'not_found') return errorProps(ctx, rc, 404, site);
-  if (content.kind === 'unavailable') return errorProps(ctx, rc, 503, site);
+  if (content.kind === 'unavailable') return errorProps(ctx, rc, 503, site, unavailableMessage(content.code));
 
   const shell = shellProps(rc, site);
   if (content.kind === 'invalid') {
