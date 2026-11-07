@@ -212,3 +212,4 @@ jobs:
           else
             gh api -X POST "repos/${REPO}/issues/${PR_NUMBER}/comments" -f body="$body" > /dev/null
           fi
+# FE-11 測試：設計分支改到 .github/（不合併）
