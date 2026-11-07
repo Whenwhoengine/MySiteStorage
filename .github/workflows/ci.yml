@@ -29,6 +29,8 @@ jobs:
   frontend-ci:
     name: frontend-ci
     runs-on: ubuntu-24.04
+    # 實測約 2.5 分鐘（run 42344797282）；留約 8 倍餘裕給冷快取與瀏覽器安裝（比照 mysite 各工作都設時限）
+    timeout-minutes: 20
     outputs:
       failed: ${{ steps.summary.outputs.failed }}
     steps:
@@ -183,6 +185,7 @@ jobs:
     needs: frontend-ci
     if: ${{ failure() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
       pull-requests: write
     steps:

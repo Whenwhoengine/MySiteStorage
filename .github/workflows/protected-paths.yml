@@ -25,6 +25,8 @@ jobs:
   protected-paths:
     name: protected-paths
     runs-on: ubuntu-24.04
+    # 只有幾次 API 呼叫與一次判定；逾時視同失敗（不放行）
+    timeout-minutes: 5
     permissions:
       contents: read
       pull-requests: write
