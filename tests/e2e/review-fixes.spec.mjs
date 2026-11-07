@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 import { HOOK, LIVE, MOCK, apiCalls, rawGet, rid } from './helpers.mjs';
 
 test.describe('非 GET、HEAD：405', () => {
-  for (const method of ['POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']) {
+  for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
     test(`${method} /articles → 405「不支援這個操作。」，不帶 Allow`, async ({ request }) => {
       const res = await request.fetch(`${MOCK}/articles`, { method, maxRedirects: 0 });
       expect(res.status()).toBe(405);
@@ -14,9 +14,18 @@ test.describe('非 GET、HEAD：405', () => {
       const html = await res.text();
       expect(html).toContain('data-error-view="405"');
       expect(html).toContain('不支援這個操作。');
-      expect(html).toContain('<title>無法完成請求｜mysite</title>');
+      // Next.js 會在 <title> 加上 data-next-head 屬性：比對標題文字，不比對屬性順序
+      expect(html).toMatch(/<title(?:\s[^>]*)?>無法完成請求｜mysite<\/title>/);
     });
   }
+
+  test('OPTIONS：Next.js 在頁面程式之前就回 400、空內文，不呼叫任何 API（Blade 是 200＋Allow，差異留給 F6 gateway）', async ({ request }) => {
+    const id = rid();
+    const res = await request.fetch(`${LIVE}/articles`, { method: 'OPTIONS', headers: { 'x-request-id': id }, maxRedirects: 0 });
+    expect(res.status()).toBe(400);
+    expect((await res.body()).length).toBe(0);
+    expect(await apiCalls(request, id)).toEqual([]);
+  });
 
   test('POST 不呼叫內容端點（只取網站資訊畫完整版面）', async ({ request }) => {
     const id = rid();

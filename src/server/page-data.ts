@@ -205,9 +205,11 @@ export function isReadMethod(method: string | undefined): boolean {
 /**
  * 其他方法：405「不支援這個操作。」，完整版面（只取網站資訊，不呼叫內容端點）。
  * 比照 Blade：Laravel 路由丟 MethodNotAllowedHttpException → ErrorRenderer::respond，回應不帶 Allow 標頭
- * （ErrorRenderer 不沿用例外的標頭）。OPTIONS 一併回 405：Blade 對 OPTIONS 回 200 空內文＋Allow: GET,HEAD
- * （Laravel AbstractRouteCollection::getRouteForMethods），但要送空內文就得在 getServerSideProps 裡提前結束回應，
- * 而 Next.js 16 的頁面處理之後仍會設定 Cache-Control 等標頭（開發模式無條件設定），會出錯，所以不這樣做。
+ * （ErrorRenderer 不沿用例外的標頭）。
+ * OPTIONS：正式伺服器（next start）在進到頁面程式之前就回 400、空內文（2026-11-07 實測），本函式碰不到；
+ * Blade 對 OPTIONS 回 200 空內文＋Allow: GET,HEAD（Laravel AbstractRouteCollection::getRouteForMethods）。
+ * 本專案不得用 middleware／proxy，所以這個差異留給 F6 的 gateway 在 next 模式處理。
+ * 萬一 OPTIONS 進到這裡（例如日後 Next.js 改變行為），一樣回 405，不畫內容。
  */
 export async function methodNotAllowedPage<V>(
   ctx: GetServerSidePropsContext,
