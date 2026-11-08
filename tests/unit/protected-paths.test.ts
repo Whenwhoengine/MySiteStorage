@@ -1,7 +1,7 @@
 // 受保護路徑守門的判定（定案執行書 §4.2、§5.2；FE-11 能以純函式表達的案例 ①～⑦、⑩；CLAUDE.md「受保護路徑宣告區塊」）。
 // ⑧⑨⑪ 屬工作流程與 GitHub 設定層，見 tests/ci/protected-paths.mjs 檔頭。
 import { spawnSync } from 'node:child_process';
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -591,11 +591,13 @@ describe('還原指令在真的 git 儲存庫裡有效', () => {
     put(work, 'src/pages/[slug].tsx', 'design slug\n');
     put(work, 'src/views/B.tsx', 'design B\n');
     put(work, 'src/pages/new.tsx', 'design new\n');
-    chmodSync(path.join(work, 'package.json'), 0o755);
     git(work, 'rm', '-q', "src/pages/it's.tsx");
     git(work, 'mv', 'src/components/safe/X.tsx', 'src/components/X.tsx');
     git(work, 'mv', 'src/views/A.tsx', 'src/pages/A.tsx');
     git(work, 'add', '-A');
+    // 權限變更直接記在 index：Windows 的 core.filemode=false 看不到檔案系統的 chmod。
+    // 必須放在 git add -A 之後；放在之前，Linux（core.filemode=true）的 add 會依工作樹的 644 把它蓋回去。
+    git(work, 'update-index', '--chmod=+x', 'package.json');
     git(work, 'commit', '-q', '-m', 'design');
 
     // main 之後又改了同一個受保護檔（design/work 尚未合併最新 main）
