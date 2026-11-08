@@ -1,7 +1,7 @@
 // 受保護路徑守門的判定（定案執行書 §4.2、§5.2；FE-11 能以純函式表達的案例 ①～⑦、⑩；CLAUDE.md「受保護路徑宣告區塊」）。
 // ⑧⑨⑪ 屬工作流程與 GitHub 設定層，見 tests/ci/protected-paths.mjs 檔頭。
 import { spawnSync } from 'node:child_process';
-import { chmodSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -531,9 +531,12 @@ describe('命令列', () => {
 
 describe('還原指令在真的 git 儲存庫裡有效', () => {
   const STATUS: Record<string, string> = { M: 'modified', A: 'added', D: 'removed', T: 'changed' };
+  // 不讀使用者自己的 git 設定：指向一個空檔案。不用 /dev/null：部分 Git for Windows 版本讀取空裝置會出錯。
+  const emptyGitConfig = path.join(makeTemp(), 'empty-gitconfig');
+  writeFileSync(emptyGitConfig, '');
   const env = {
     ...process.env,
-    GIT_CONFIG_GLOBAL: '/dev/null',
+    GIT_CONFIG_GLOBAL: emptyGitConfig,
     GIT_CONFIG_NOSYSTEM: '1',
     GIT_AUTHOR_NAME: 'test',
     GIT_AUTHOR_EMAIL: 'test@example.invalid',
@@ -544,6 +547,19 @@ describe('還原指令在真的 git 儲存庫裡有效', () => {
     const res = spawnSync('git', args, { cwd, env, encoding: 'utf8' });
     if (res.status !== 0) throw new Error(`git ${args.join(' ')} 失敗：${res.stderr}`);
     return res.stdout;
+  };
+  /**
+   * 還原指令約定以 Git Bash 執行（委託人的本機 Claude Code 在 Git Bash 裡跑）。
+   * Windows 上直接呼叫 `bash` 可能解析成 WSL 的 System32\bash.exe（Linux 環境、找不到 Windows 的 git），
+   * 所以從 git 自己的安裝位置找 Git Bash：git --exec-path 是 <Git>/mingw64（或 ucrt64）/libexec/git-core。
+   */
+  const gitBash = (): string => {
+    if (process.platform !== 'win32') return 'bash';
+    const root = path.resolve(git(tmpdir(), '--exec-path').trim(), '..', '..', '..');
+    const candidates = [path.join(root, 'bin', 'bash.exe'), path.join(root, 'usr', 'bin', 'bash.exe')];
+    const found = candidates.find((candidate) => existsSync(candidate));
+    if (found === undefined) throw new Error(`找不到 Git Bash（找過：${candidates.join('、')}）`);
+    return found;
   };
   const put = (root: string, rel: string, content: string) => {
     mkdirSync(path.dirname(path.join(root, rel)), { recursive: true });
@@ -591,11 +607,13 @@ describe('還原指令在真的 git 儲存庫裡有效', () => {
     put(work, 'src/pages/[slug].tsx', 'design slug\n');
     put(work, 'src/views/B.tsx', 'design B\n');
     put(work, 'src/pages/new.tsx', 'design new\n');
-    chmodSync(path.join(work, 'package.json'), 0o755);
     git(work, 'rm', '-q', "src/pages/it's.tsx");
     git(work, 'mv', 'src/components/safe/X.tsx', 'src/components/X.tsx');
     git(work, 'mv', 'src/views/A.tsx', 'src/pages/A.tsx');
     git(work, 'add', '-A');
+    // 權限變更直接記在 index：Windows 的 core.filemode=false 看不到檔案系統的 chmod。
+    // 必須放在 git add -A 之後；放在之前，Linux（core.filemode=true）的 add 會依工作樹的 644 把它蓋回去。
+    git(work, 'update-index', '--chmod=+x', 'package.json');
     git(work, 'commit', '-q', '-m', 'design');
 
     // main 之後又改了同一個受保護檔（design/work 尚未合併最新 main）
@@ -608,7 +626,7 @@ describe('還原指令在真的 git 儲存庫裡有效', () => {
       ['package.json', 'src/components/safe/X.tsx', 'src/pages/A.tsx', "src/pages/it's.tsx", 'src/pages/new.tsx', 'src/pages/[slug].tsx'].sort(),
     );
 
-    const restored = spawnSync('bash', ['-e', '-c', before.restoreCommands.join('\n')], { cwd: work, env, encoding: 'utf8' });
+    const restored = spawnSync(gitBash(), ['-e', '-c', before.restoreCommands.join('\n')], { cwd: work, env, encoding: 'utf8' });
     expect(restored.status, restored.stderr).toBe(0);
     git(work, 'commit', '-q', '-m', 'restore');
 
